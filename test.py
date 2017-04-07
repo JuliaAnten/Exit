@@ -12,5 +12,6 @@ for x in range(num1,num2+1):
 print("sum")
 print(sum)
 
+# hallo daar dit is verdome geen python code mv. Anten!!!!!
 print(Sander,Julia,Maxim)
 print(Hiep hoi, Sander doet ook iets)
