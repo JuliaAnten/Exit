@@ -11,3 +11,5 @@ for x in range(num1,num2+1):
 
 print("sum")
 print(sum)
+
+print(Sander,Julia,Maxim)
