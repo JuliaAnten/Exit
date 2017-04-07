@@ -13,3 +13,4 @@ print("sum")
 print(sum)
 
 print(Sander,Julia,Maxim)
+print(Hiep hoi, Sander doet ook iets)
