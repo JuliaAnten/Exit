@@ -28,47 +28,68 @@
 
 ###################################
 
-# generate board
-board = [['-' for y in range(6)] for x in range(6)]
+# height and width of the board
+DIM = 6
 
-# put red car on board
-board[2][3] = 'R'
-board[2][4] = 'R'
+# initialize empty board
+board = [['-' for y in range(DIM)] for x in range(DIM)]
 
-# set orange 1
-board[4][0] = 'A'
-board[5][0] = 'A'
+def main():
 
-# set orange 2
-board[3][4] = 'B'
-board[3][5] = 'B'
+	# put red car on board
+	board[2][3] = 'R'
+	board[2][4] = 'R'
 
-# set orange 3
-board[3][3] = 'C'
-board[4][3] = 'C'
-board[5][3] = 'C'
+	# set orange 1
+	board[4][0] = 'A'
+	board[5][0] = 'A'
 
-# set blue 1
-board[0][3] = 'D'
-board[0][4] = 'D'
+	# set orange 2
+	board[3][4] = 'B'
+	board[3][5] = 'B'
 
-# set blue 2
-board[4][1] = 'E'
-board[4][2] = 'E'
+	# set orange 3
+	board[3][3] = 'C'
+	board[4][3] = 'C'
+	board[5][3] = 'C'
 
-# set purple 1
-board[0][2] = 'F'
-board[1][2] = 'F'
-board[2][2] = 'F'
+	# set blue 1
+	board[0][3] = 'D'
+	board[0][4] = 'D'
 
-# set yellow 1
-board[0][5] = 'G'
-board[1][5] = 'G'
-board[2][5] = 'G'
+	# set blue 2
+	board[4][1] = 'E'
+	board[4][2] = 'E'
 
-# set green
-board[5][5] = 'H'
-board[5][4] = 'H'
+	# set purple 1
+	board[0][2] = 'F'
+	board[1][2] = 'F'
+	board[2][2] = 'F'
+
+	# set yellow 1
+	board[0][5] = 'G'
+	board[1][5] = 'G'
+	board[2][5] = 'G'
+
+	# set green
+	board[5][5] = 'H'
+	board[5][4] = 'H'
+
+	# draw current state of board
+	draw_current()
+
+	# ask for input
+	print("Car to move")
+
+		# ask for CarID and direction
+
+
 # print board
-for row in board:
-	print(row)
+def draw_current():
+	for row in board:
+		print(row)
+	print("\n\n")
+
+# make sure main is called
+if __name__ == "__main__":
+	main()
