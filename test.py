@@ -1,15 +1,13 @@
 from car import Car
 from board import Board
 
-# cars = []
-
-# cars[0] = Car("red", 0, 0, 2, "v")
-
-# print(red.x)
+cars = [{"name": "red", "x": 0, "y": 2, "length": 2, "orientation": "h"},
+		{"name": "a", "x": 3, "y": 2, "length": 2, "orientation": "v"},
+		{"name": "b", "x": 4, "y": 4, "length": 2, "orientation": "h"}]
 
 board = Board(6)
 
-board.make()
+board.init_cars(cars)
 
 for row in board.state:
 	print(row)

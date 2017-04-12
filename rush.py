@@ -30,6 +30,8 @@
 
 ###################################
 
+from board import Board
+
 # height and width of the board
 DIM = 6
 
