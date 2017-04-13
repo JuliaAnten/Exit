@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+__eq_
+!/usr/bin/env python3
 
 # class Car:
 # 	def __init__(self, id, size, orientation, location):
