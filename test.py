@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from car import Car
 from board import Board
 
