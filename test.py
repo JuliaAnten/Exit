@@ -1,33 +1,28 @@
 #!/usr/bin/env python3
 
+###############################################
+#
+# this is the controller for the test.py game
+#
+# Usage: ./test.py path/to/board
+#
+#
+###############################################
+
+
+
+import sys
 from car import Car
 from board import Board
 
-path = "boards/01.txt"
+if not 1 < len(sys.argv) < 3:
+	print("Usage: ./test.py path/to/board")
 
-
-cars = [{"name": "red", "x": 0, "y": 2, "length": 2, "orientation": "h"},
-		{"name": "a", "x": 3, "y": 2, "length": 2, "orientation": "v"},
-		{"name": "b", "x": 4, "y": 4, "length": 2, "orientation": "h"}]
-
-board = Board(6)
-
-board.init_cars(cars)
-
-for row in board.state:
-	print(row)
-
-board.init_cars(cars)
-
-dim, cars = board.import_board(path)
-
-print(dim)
-print(cars)
-
-print("+++++working???+++++")
-board = Board(dim)
-
-board.init_cars(cars)
-
-for row in board.state:
-	print(row)
+else:
+	path = str(sys.argv[1])
+	# initialize board and set up the game
+	board = Board(path);
+	
+	# print board
+	for row in board.current_state:
+		print(row)
