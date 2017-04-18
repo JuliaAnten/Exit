@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+###############################################
+#
+#
+#
+#
+#
+#
+###############################################
+
 # dimension of the board (so that the car can get out of the area)
 dimensions = 6
 
