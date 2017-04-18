@@ -7,6 +7,7 @@ class Board(object):
 		self.dimension = 0
 		self.cars = []
 		self.current_state = []
+		# is dit wel handig? 
 		self.setup_board()
 
 	
@@ -79,13 +80,6 @@ class Board(object):
 
 					# create dictionary 
 					dic = {'name': words[0], 'x': int(words[1]), 'y': int(words[2]), 'length': int(words[3]), 'orientation': words[4]}
-
-					# # extracting individuel words and putting them in a dict
-					# dic["name"] = words[0]
-					# dic["x"] = words[1]
-					# dic["y"] = words[2]
-					# dic["length"] = words[3]
-					# dic["orientation"] = words[4]
 
 					car = Car(dic['name'],
 							  dic['x'], 
