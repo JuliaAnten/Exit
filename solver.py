@@ -30,6 +30,7 @@ class Solver(object):
 			# one step forward
 			# self.current.current_state gets 2d array representation of board
 			print()
+			print(car.x + car.length)
 			print(self.current.current_state[2][5])
 			print()
 
