@@ -7,6 +7,8 @@ class Board(object):
 		self.dimension = 0
 		self.cars = []
 		self.current_state = []
+		# is dit wel handig? 
+		self.setup_board()
 
 	
 	# initialize empty board
@@ -74,19 +76,26 @@ class Board(object):
 
 				# if line contains car info
 				else:
+					# split string
 					words = line.split(',')
 
 					# create dictionary 
-					dic = {'name': words[0], 'x': int(words[1]), 'y': int(words[2]), 'length': int(words[3]), 'orientation': words[4]}
+					dic = {'name': words[0], 
+						   'x': int(words[1]),
+						   'y': int(words[2]),
+						   'length': int(words[3]), 
+						   'orientation': words[4]}
 
+					# population dictionary
 					car = Car(dic['name'],
 							  dic['x'], 
 							  dic["y"],
 							  dic["length"],
 							  dic["orientation"])
-
-
+					
+					# append the dictonary to the list
 					self.cars.append(car)
+
 		file.close()
 		print("input file processed")
 		
