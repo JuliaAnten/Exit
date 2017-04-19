@@ -7,4 +7,7 @@ class Car(object):
 		self.y = y
 		self.length = length
 		self.orientation = orientation
-		
+
+	# a car object is printed like this and not with the adress
+	def __repr__(self):
+		return "Car('" + self.name +"', " + str(self.x) + ", " + str(self.y) + ", " + str(self.length) + ", '" + self.orientation + "')"
