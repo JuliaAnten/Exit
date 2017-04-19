@@ -27,6 +27,7 @@ class Board(object):
 		# initalize cars
 		print("List of cars:")
 		for car in self.cars:
+			
 			print(car.name, "\t", car.x, car.y, car.length, car.orientation)
 			
 			if car.orientation == "h":
@@ -51,7 +52,33 @@ class Board(object):
 		print("\n")
 		print("Cars have been put onto the board")
 
-	
+	def update_current_state(self):
+		print("++update_current_state+++")
+
+		# creating a new empty board 
+		self.make()
+
+		# looking for car(s) locations
+		for car in self.cars:
+			# print all the cars that exsist
+			print(car.name, "\t", car.x, car.y, car.length, car.orientation)
+
+			# if the car oriantation is h = horizontal
+			if car.orientation == "h":
+				for i in range(car.length):
+					# placeing the car on the board (if updatede)
+					# the updatede location
+					self.current_state[car.y][car.x + i] = car.name[0]
+			# if the are is v = verital
+			else:
+				for i in range(car.length):
+					self.current_state[car.y + i][car.x] = car.name[0]
+
+
+	def print(self):
+		for row in self.current_state:
+			print(row)
+
 	# import board configuration and store contents accordingly
 	def import_board(self, path):
 		# opening the input file and reading it

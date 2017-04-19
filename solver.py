@@ -23,21 +23,22 @@ class Solver(object):
 	def move(self, car):
 		# vertical
 		if car.orientation == "v":
-			print("vertical")
+			print("vertical---dowing nothign")
 		# horizontal
 		else:
 			print("horizontal")
 			# one step forward
 			# self.current.current_state gets 2d array representation of board
+			print()
+			print(self.current.current_state[2][5])
+			print()
+
 			if self.current.current_state[car.x + car.length][car.y] == "-":
 				print("valid")
 				for auto in self.current.cars:
-					print("for loop entered")
+					print("for loop entered+")
 					if auto.name == car.name:
 						auto.x += 1
 						print("x adjusted")
 			else:
 				print("invalid")
-
-		for row in self.current.current_state:
-			print(row)
