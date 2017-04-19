@@ -4,3 +4,5 @@
 *.pyc
 
 *.pyc
+
+__pycache__/board.cpython-36.pyc
