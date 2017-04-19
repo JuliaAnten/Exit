@@ -16,14 +16,14 @@ class Solver(object):
 	def solve(self):
 		print ("solving...")
 
-		for car in (self.current.cars):
+		for name, car in self.current.cars.items():
 			self.move(car)
-
 
 	def move(self, car):
 		# vertical
 		if car.orientation == "v":
 			print("vertical---dowing nothign")
+		
 		# horizontal
 		else:
 			print("horizontal")
@@ -36,7 +36,7 @@ class Solver(object):
 
 			if self.current.current_state[car.x + car.length][car.y] == "-":
 				print("valid")
-				for auto in self.current.cars:
+				for name, auto in self.current.cars.items():
 					print("for loop entered+")
 					if auto.name == car.name:
 						auto.x += 1
