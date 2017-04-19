@@ -23,8 +23,12 @@ class Solver(object):
 	def move(self, car):
 		# vertical
 		if car.orientation == "v":
-			print("vertical---dowing nothign")
-		# horizontal
+			print("vertical")
+			# check 1,5
+			print(car.y,car.x)
+			print(self.current.current_state[1][5])
+			print(self.current.current_state[car.y - 1][car.x])
+
 		else:
 			print("horizontal")
 			# one step forward
@@ -37,4 +41,5 @@ class Solver(object):
 						auto.x += 1
 						print("x adjusted")
 			else:
+				# block move
 				print("invalid")
