@@ -29,12 +29,7 @@ class Solver(object):
 			print("horizontal")
 			# one step forward
 			# self.current.current_state gets 2d array representation of board
-			print()
-			print(car.x + car.length)
-			print(self.current.current_state[2][5])
-			print()
-
-			if self.current.current_state[car.x + car.length][car.y] == "-":
+			if self.current.current_state[car.y][car.x + car.length] == "-":
 				print("valid")
 				for auto in self.current.cars:
 					print("for loop entered+")
