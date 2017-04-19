@@ -5,7 +5,7 @@ class Board(object):
 	def __init__(self, path):
 		self.path = path
 		self.dimension = 0
-		self.cars = []
+		self.cars = {}
 		self.current_state = []
 	
 	# initialize empty board
@@ -25,11 +25,8 @@ class Board(object):
 		self.make()
 
 		# initalize cars
-		print("List of cars:")
-		for car in self.cars:
-			
-			print(car.name, "\t", car.x, car.y, car.length, car.orientation)
-			
+		print("Dict of cars:")
+		for name, car in self.cars.items():
 			if car.orientation == "h":
 				for i in range(car.length):
 					if (car.x + i) >= self.dimension:
@@ -103,23 +100,16 @@ class Board(object):
 					# split string
 					words = line.split(',')
 
-					# create dictionary 
-					dic = {'name': words[0], 
-						   'x': int(words[1]),
-						   'y': int(words[2]),
-						   'length': int(words[3]), 
-						   'orientation': words[4]}
-
-					# population dictionary
-					car = Car(dic['name'],
-							  dic['x'], 
-							  dic["y"],
-							  dic["length"],
-							  dic["orientation"])
+					# populate car object
+					car = Car(words[0],
+							  int(words[1]), 
+							  int(words[2]),
+							  int(words[3]),
+							  words[4])
 					
-					# append the dictonary to the list
-					self.cars.append(car)
-
+					# append the car to the car dictionary
+					self.cars[words[0]] = car
+					
 		file.close()
 		print("input file processed")
 		
