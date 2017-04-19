@@ -25,7 +25,8 @@ class Board(object):
 		self.make()
 
 		# initalize cars
-		print("Dict of cars:")
+		print("dict of cars:")
+		print(self.cars)		
 		for name, car in self.cars.items():
 			if car.orientation == "h":
 				for i in range(car.length):
@@ -56,7 +57,7 @@ class Board(object):
 		self.make()
 
 		# looking for car(s) locations
-		for car in self.cars:
+		for name, car in self.cars.items():
 			# print all the cars that exsist
 			print(car.name, "\t", car.x, car.y, car.length, car.orientation)
 
