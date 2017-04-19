@@ -31,5 +31,3 @@ else:
 
 	# start the solving
 	solver = Solver(board)	
-
-	# return the solution

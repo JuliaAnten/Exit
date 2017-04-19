@@ -10,18 +10,34 @@ class Solver(object):
 		# series of moves that solves the board
 		self.solution = []
 
-		# archive
-		self.archive = []
-
-		# queue
-		self.queue = []
-
 		# immediately start the solving
 		self.solve()
 
 	def solve(self):
-		print ("hello, this is solver speaking")
+		print ("solving...")
 
-		print(self.current.dimension)
+		for car in (self.current.cars):
+			self.move(car)
 
-		
+
+	def move(self, car):
+		# vertical
+		if car.orientation == "v":
+			print("vertical")
+		# horizontal
+		else:
+			print("horizontal")
+			# one step forward
+			# self.current.current_state gets 2d array representation of board
+			if self.current.current_state[car.x + car.length][car.y] == "-":
+				print("valid")
+				for auto in self.current.cars:
+					print("for loop entered")
+					if auto.name == car.name:
+						auto.x += 1
+						print("x adjusted")
+			else:
+				print("invalid")
+
+		for row in self.current.current_state:
+			print(row)
