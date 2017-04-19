@@ -7,9 +7,6 @@ class Board(object):
 		self.dimension = 0
 		self.cars = []
 		self.current_state = []
-		# is dit wel handig? 
-		self.setup_board()
-
 	
 	# initialize empty board
 	def make(self):
