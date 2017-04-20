@@ -15,14 +15,13 @@ from board import Board
 from solver import Solver
 
 
-if not 1 < len(sys.argv) < 3:
-	print("Usage: ./test.py path/to/board")
+assert (1 < len(sys.argv) < 3),	"Usage: ./test.py path/to/board"
 
 path = str(sys.argv[1])
 # initialize board and set up the game
 board = Board(path)
 board.setup_board()
-	
+
 # print board
 board.print()
 
@@ -33,4 +32,3 @@ board.update_current_state()
 
 # printing updated board
 board.print()
-
