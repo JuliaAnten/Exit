@@ -7,7 +7,17 @@ class Board(object):
 		self.dimension = 0
 		self.cars = {}
 		self.current_state = []
-	
+
+
+	def __repr__(self):
+		string = ""
+		for row in self.current_state:
+			string+=str(row)
+			string+="\n"
+		return "Current State: \n" + string 
+
+				
+
 	# initialize empty board
 	def make(self):
 		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
@@ -25,8 +35,7 @@ class Board(object):
 		self.make()
 
 		# initalize cars
-		print("dict of cars:")
-		print(self.cars)		
+		print("Dict of cars:")
 		for name, car in self.cars.items():
 			if car.orientation == "h":
 				for i in range(car.length):
@@ -57,7 +66,7 @@ class Board(object):
 		self.make()
 
 		# looking for car(s) locations
-		for name, car in self.cars.items():
+		for car in self.cars:
 			# print all the cars that exsist
 			print(car.name, "\t", car.x, car.y, car.length, car.orientation)
 
