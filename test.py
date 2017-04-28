@@ -23,12 +23,12 @@ board = Board(path)
 board.setup_board()
 
 # print board
-board.print()
+print("\nStart board:")
+print(board)
 
 # start the solving
 solver = Solver(board)
 
-board.update_current_state()
-
 # printing updated board
-board.print()
+print("\nEnd board:")
+print(board)

@@ -14,16 +14,12 @@ class Board(object):
 		for row in self.current_state:
 			string+=str(row)
 			string+="\n"
-		return "Current State: \n" + string 
-
-				
+		return string 
 
 	# initialize empty board
 	def make(self):
 		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
 		self.current_state = state
-		print("empty board created")
-
 	
 	# initialize board with cars on it
 	def setup_board(self):
@@ -35,7 +31,6 @@ class Board(object):
 		self.make()
 
 		# initalize cars
-		print("dict of cars:")
 		for name, car in self.cars.items():
 			if car.orientation == "h":
 				for i in range(car.length):
@@ -56,11 +51,7 @@ class Board(object):
 					else:
 						self.current_state[car.y + i][car.x] = car.name[0]
 
-		print("\n")
-		print("Cars have been put onto the board")
-
 	def update_current_state(self):
-		print("++update_current_state+++")
 
 		# creating a new empty board 
 		self.make()
@@ -68,30 +59,31 @@ class Board(object):
 		# looking for car(s) locations
 		for name, car in self.cars.items():
 			# print all the cars that exsist
-			print(car.name, "\t", car.x, car.y, car.length, car.orientation)
+			# print(car.name, "\t", car.x, car.y, car.length, car.orientation)
 
-			# if the car oriantation is h = horizontal
+			# if the car orientation is h = horizontal
 			if car.orientation == "h":
 				for i in range(car.length):
 					# placeing the car on the board (if updatede)
 					# the updatede location
 					self.current_state[car.y][car.x + i] = car.name[0]
+			
 			# if the are is v = verital
 			else:
 				for i in range(car.length):
 					self.current_state[car.y + i][car.x] = car.name[0]
 
 
-	def print(self):
-		for row in self.current_state:
-			print(row)
+	# def print(self):
+	# 	for row in self.current_state:
+	# 		print(row)
 
 	# import board configuration and store contents accordingly
 	def import_board(self, path):
 		# opening the input file and reading it
 		file = open(path, "r")
 		if file == None:
-			print("Opening dictionary file fialed")
+			print("Opening dictionary file failed")
 
 		# parse input file line by line
 		for line in file.readlines(): 
@@ -121,5 +113,4 @@ class Board(object):
 					self.cars[words[0]] = car
 					
 		file.close()
-		print("input file processed")
 		
