@@ -7,14 +7,14 @@ class Board(object):
 		self.dimension = 0
 		self.cars = {}
 		self.current_state = []
-
+		self.parent = "root"
 
 	def __repr__(self):
 		string = ""
 		for row in self.current_state:
 			string+=str(row)
 			string+="\n"
-		return string 
+		return string
 
 	# initialize empty board
 	def make(self):
@@ -73,10 +73,7 @@ class Board(object):
 				for i in range(car.length):
 					self.current_state[car.y + i][car.x] = car.name[0]
 
-
-	# def print(self):
-	# 	for row in self.current_state:
-	# 		print(row)
+		return True
 
 	# import board configuration and store contents accordingly
 	def import_board(self, path):

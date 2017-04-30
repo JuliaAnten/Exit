@@ -12,7 +12,7 @@
 import sys
 from car import Car
 from board import Board
-from solver import Solver
+from breadth import Breadth
 
 
 assert (1 < len(sys.argv) < 3),	"Usage: ./test.py path/to/board"
@@ -27,7 +27,7 @@ print("\nStart board:")
 print(board)
 
 # start the solving
-solver = Solver(board)
+solver = Breadth(board)
 
 # printing updated board
 print("\nEnd board:")

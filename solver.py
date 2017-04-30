@@ -35,8 +35,7 @@ class Solver(object):
 		print("solved:\n in {} moves\n moves: {}".format(self.counter, self.solution))
 
 	def move(self, car):
-		"""Tries random moves on a car. 
-		   Returns a valid move in a string if succesful."""
+		"""Tries random moves on a car."""
 
 		# generate random direction (1 is forward, 0 is backward)
 		direction = random.randint(0,1)
