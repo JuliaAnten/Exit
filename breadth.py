@@ -13,85 +13,99 @@ class Breadth(object):
 		# counter
 		self.counter = 0
 
-		"""Breadth first specific"""		
+		"""Breadth first specific"""
 		# set up empty archive
-		self.archive = []
+		self.archive = {}
 		# set up queue (uses queue module)
 		self.queue = Queue(0)
 
-		# immediately start the solving
-		self.solve()
+		# # immediately start the solving
+		# self.solve()
 
 	def solve(self):
 		print("solving...")
 
-		self.archive.append(self.rootboard)
+		self.archive = {self.rootboard : 1}
 		self.queue.put(self.rootboard)
 
+		print("while loop entering!")
 		while (self.queue.empty() != True):
-			print("while loop entered")
-			
+
 			# get first board from queue
 			current = self.queue.get()
 
+			# print(current.cars['red'].x)
+			# print(current)
 			# if current is a winner
 			if current.cars['red'].x == 4:
 				print("solved!")
 				return current
 
 			# otherwise generate all possible boards adjecent to current
-			possibilities = self.get_possibilities(current)
-			print("\npossibilities:")
-			for possibility in possibilities:
-				# enqueue possibility
-				self.queue.put(possibility)
-				print(possibility)
-			print("/possibilities")
+			self.get_possibilities(current)
 
-			# check for possible boards if they're in the archive
-			# for board in possibilities:
-			# 	if board is not in self.archive:
-			# 		self.archive.append(board)
-			# 		board.parent = current
-			# 		queue.put(board)
+		# print("solved:\n in {} moves\n moves: {}".format
+		# 	(self.counter, self.solution))
 
-		print("solved:\n in {} moves\n moves: {}".format
-			(self.counter, self.solution))
 
-	
 	def get_possibilities(self, board):
-		lst = []
+
 		for name, car in board.cars.items():
 
-			print(car)
+			# print(car)
 			# if forward is valid
 			possibility = self.move(board, car, 1)
 			if possibility != False:
-				# add it to the list
-				lst.append(possibility)
-				print("forward")
-				print(board.cars)
-				print(possibility)
 
-			
+				# check if possibility is in archive
+				try:
+					if self.archive[possibility] == 1:
+						# board is in archive dus niet toevoegend
+						continue
+						#print("zit in archief")
+				except KeyError:
+					# board is niet in archive
+					# print("zit nog niet in archief")
+
+					# add it to the list
+					self.archive = {possibility: 1}
+					self.queue.put(possibility)
+
+					# # print("forward")
+					# print(board.cars)
+					# print(possibility)
+
+
 			# if backward is valid
 			possibility = self.move(board, car, 0)
 			if possibility != False:
-				# add it to the list
-				lst.append(possibility)
-				print("backward")
-				print(board.cars)
-				print(possibility)
 
-		return lst
+				# check if possibility is in archive
+				try:
+					if self.archive[possibility] == 1:
+						# board is in archive dus niet toevoegend
+						continue
+						# print("zit in archief")
+				except KeyError:
+					# board is niet in archive
+					# print("zit nog niet in archief")
+
+					# add it to the list
+					self.archive = {possibility: 1}
+					self.queue.put(possibility)
+
+					# print("forward")
+					# print(board.cars)
+					# print(possibility)
+
 
 	def move(self, board, car, direction):
-		"""Tries random moves on a car. 
+		"""Tries random moves on a car.
 		   Returns a child board if move is valid, otherwise returns false."""
 		outboard = copy.deepcopy(board)
 
 		# vertical
-		if car.orientation == "v":	
+		if car.orientation == "v":
 			# if direction is forward
 			if direction == 1:
 				# one step forward
@@ -102,7 +116,7 @@ class Breadth(object):
 						outboard.cars[car.name].y += 1
 						outboard.update_current_state()
 						return outboard
-				
+
 			# if direction is backward
 			else:
 				# one step backward
@@ -115,8 +129,8 @@ class Breadth(object):
 
 		# if orientation is horizontal
 		else:
-			# if direction is forward			
-			if direction == 1:					
+			# if direction is forward
+			if direction == 1:
 				# one step forward
 				if car.x + car.length < outboard.dimension:
 					# check if there is room on the board to move
@@ -125,9 +139,9 @@ class Breadth(object):
 						outboard.cars[car.name].x += 1
 						outboard.update_current_state()
 						return outboard
-			
+
 			# if direction is backward
-			else:				
+			else:
 				# one step backward
 				if car.x - 1 > 0:
 					# check if there is room on the board to move
@@ -139,5 +153,3 @@ class Breadth(object):
 
 		# no valid moves
 		return False
-		
-

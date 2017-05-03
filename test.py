@@ -28,7 +28,8 @@ print(board)
 
 # start the solving
 solver = Breadth(board)
+print(solver.solve())
 
-# printing updated board
-print("\nEnd board:")
-print(board)
+# # printing updated board
+# print("\nEnd board:")
+# print(solver.cars)
