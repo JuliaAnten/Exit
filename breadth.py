@@ -1,6 +1,7 @@
 from board import Board
 from queue import Queue
 import copy
+import sys
 
 class Breadth(object):
 	"""docstring for Solver"""
@@ -20,13 +21,20 @@ class Breadth(object):
 		self.queue = Queue(0)
 
 		# # immediately start the solving
+		# # deze word nu geroepen in test.py
 		# self.solve()
 
 	def solve(self):
 		print("solving...")
 
-		self.archive = {self.rootboard : 1}
+		print(self.rootboard.cars)
+
+		self.archive[self.rootboard.cars] = 1
 		self.queue.put(self.rootboard)
+
+		if self.archive[self.rootboard] == 1:
+			print("ja ik ben er!")
+
 
 		print("while loop entering!")
 		while (self.queue.empty() != True):
@@ -35,10 +43,13 @@ class Breadth(object):
 			current = self.queue.get()
 
 			# print(current.cars['red'].x)
-			# print(current)
+			print(current)
 			# if current is a winner
 			if current.cars['red'].x == 4:
 				print("solved!")
+
+				# deze functie moeten we wat een passen
+				# hij returned nu wel the board maar die vangen we nergens op.
 				return current
 
 			# otherwise generate all possible boards adjecent to current
@@ -62,15 +73,12 @@ class Breadth(object):
 					if self.archive[possibility] == 1:
 						# board is in archive dus niet toevoegend
 						continue
-						#print("zit in archief")
 				except KeyError:
 					# board is niet in archive
-					# print("zit nog niet in archief")
 
 					# add it to the list
-					self.archive = {possibility: 1}
+					self.archive[possibility] = 1
 					self.queue.put(possibility)
-
 					# # print("forward")
 					# print(board.cars)
 					# print(possibility)
@@ -85,13 +93,11 @@ class Breadth(object):
 					if self.archive[possibility] == 1:
 						# board is in archive dus niet toevoegend
 						continue
-						# print("zit in archief")
 				except KeyError:
 					# board is niet in archive
-					# print("zit nog niet in archief")
 
 					# add it to the list
-					self.archive = {possibility: 1}
+					self.archive[possibility] = 1
 					self.queue.put(possibility)
 
 					# print("forward")
