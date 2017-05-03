@@ -1,5 +1,6 @@
 from board import Board
 from queue import Queue
+import copy
 
 class Breadth(object):
 	"""docstring for Solver"""
@@ -41,9 +42,10 @@ class Breadth(object):
 			# otherwise generate all possible boards adjecent to current
 			possibilities = self.get_possibilities(current)
 			print("\npossibilities:")
-			for i in possibilities:
-				
-				print(i)
+			for possibility in possibilities:
+				# enqueue possibility
+				self.queue.put(possibility)
+				print(possibility)
 			print("/possibilities")
 
 			# check for possible boards if they're in the archive
@@ -86,7 +88,7 @@ class Breadth(object):
 	def move(self, board, car, direction):
 		"""Tries random moves on a car. 
 		   Returns a child board if move is valid, otherwise returns false."""
-		outboard = board.deepcopy()
+		outboard = copy.deepcopy(board)
 
 		# vertical
 		if car.orientation == "v":	
