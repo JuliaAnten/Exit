@@ -5,7 +5,7 @@ class Board(object):
 	def __init__(self, path):
 		self.path = path
 		self.dimension = 0
-		self.cars = {}
+		self.cars = []
 		self.current_state = []
 		self.parent = "root"
 
@@ -16,23 +16,22 @@ class Board(object):
 			string+="\n"
 		return string
 
-	def __eq__ (self, other):
+	def __hash__(self):
+		lst = []
+		"""hash() has to return an integer. 
+		This is our solution, but there has to be a better way"""
+		[lst.append(str(hash(car))) for car in self.cars]
+		return int("".join(lst))
+
+	def __eq__(self, other):
 		return hash(self) == hash(other)
 
-	def __hash__ (self):
-		lst = []
-
-		for name, car in self.cars.items():
-			lst.append(str(hash(car)))
-
-		hs = int("".join(lst))
-		return hs
-
+	
 	# initialize empty board
 	def make(self):
 		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
 		self.current_state = state
-
+	
 	# initialize board with cars on it
 	def setup_board(self):
 
@@ -43,7 +42,7 @@ class Board(object):
 		self.make()
 
 		# initalize cars
-		for name, car in self.cars.items():
+		for car in self.cars:
 			if car.orientation == "h":
 				for i in range(car.length):
 					if (car.x + i) >= self.dimension:
@@ -65,11 +64,11 @@ class Board(object):
 
 	def update_current_state(self):
 
-		# creating a new empty board
+		# creating a new empty board 
 		self.make()
 
 		# looking for car(s) locations
-		for name, car in self.cars.items():
+		for car in self.cars:
 			# print all the cars that exsist
 			# print(car.name, "\t", car.x, car.y, car.length, car.orientation)
 
@@ -79,7 +78,7 @@ class Board(object):
 					# placeing the car on the board (if updatede)
 					# the updatede location
 					self.current_state[car.y][car.x + i] = car.name[0]
-
+			
 			# if the are is v = verital
 			else:
 				for i in range(car.length):
@@ -95,8 +94,8 @@ class Board(object):
 			print("Opening dictionary file failed")
 
 		# parse input file line by line
-		for line in file.readlines():
-
+		for line in file.readlines(): 
+			
 			# ignore irrelevant lines
 			if not line.startswith("#") or line.startswith(" ") or line.startswith("\n"):
 
@@ -113,12 +112,13 @@ class Board(object):
 
 					# populate car object
 					car = Car(words[0],
-							  int(words[1]),
+							  int(words[1]), 
 							  int(words[2]),
 							  int(words[3]),
 							  words[4])
-
+					
 					# append the car to the car dictionary
-					self.cars[words[0]] = car
-
+					self.cars.append(car)
+					
 		file.close()
+		

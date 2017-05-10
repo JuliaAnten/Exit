@@ -11,6 +11,8 @@ class Breadth(object):
 		self.rootboard = startboard
 		# series of moves that solves the board
 		self.solution = []
+		# winstate of the board
+		self.winstate = []
 		# counter
 		self.counter = 0
 
@@ -20,36 +22,46 @@ class Breadth(object):
 		# set up queue (uses queue module)
 		self.queue = Queue()
 
-		# # immediately start the solving
-		# # deze word nu geroepen in test.py
-		# self.solve()
+		# immediately start the solving
+		# deze word nu geroepen in test.py
+		self.solve()
 
 	def solve(self):
 		print("solving...")
 
-		print(self.rootboard.cars)
+		print(hash(self.rootboard))
+		
 
+		# add rootboard to archive with cars as key and 1 as value
 		self.archive[hash(self.rootboard)] = 1
+		print(self.archive)
+		
+		# add rootboard to queue
 		self.queue.put(self.rootboard)
 
+		# while queue is not empty, keep looking		
 		print("while loop entering!")
 		while (self.queue.empty() != True):
 
 			# get first board from queue
 			current = self.queue.get()
-
-			# print(current.cars['red'].x)
-			# print(current)
+			print(current)
+		
 			# if current is a winner
-			if current.cars['red'].x == 4:
+			if current.cars[0].x == 4:
 				print("solved!")
-
+				print(current.cars[0].name)
+				self.winstate = current.current_state
 				# deze functie moeten we wat een passen
 				# hij returned nu wel the board maar die vangen we nergens op.
-				return current
-
+				return
 			# otherwise generate all possible boards adjecent to current
+			# and add to board
 			self.get_possibilities(current)
+			print("queue length: " + str(self.queue.qsize()))
+			self.counter += 1
+
+		print("not solved :(")
 
 		# print("solved:\n in {} moves\n moves: {}".format
 		# 	(self.counter, self.solution))
@@ -57,31 +69,13 @@ class Breadth(object):
 
 	def get_possibilities(self, board):
 
-		for name, car in board.cars.items():
+		for car in board.cars:
 
-			# if forward is valid
-			possibility = self.move(board, car, 1)
-			if possibility != False:
-
-				# check if possibility is in archive
-				if hash(possibility) not in self.archive:
-						# board is in archive dus niet toevoegend
-					# board is niet in archive
-					# add it to the list
-					self.archive[hash(possibility)] = 1
-					self.queue.put(possibility)
-
-			# if backward is valid
-			possibility = self.move(board, car, 0)
-			if possibility != False:
-
-				# check if possibility is in archive
-				if hash(possibility) not in self.archive:
-						# board is in archive dus niet toevoegend
-					# board is niet in archive
-					# add it to the list
-					self.archive[hash(possibility)] = 1
-					self.queue.put(possibility)
+			# try forward
+			self.try_move(board, car, 1);
+			
+			# try backward
+			self.try_move(board, car, 0);
 
 
 	def move(self, board, car, direction):
@@ -98,7 +92,7 @@ class Breadth(object):
 				if car.y + car.length < outboard.dimension:
 					if outboard.current_state[car.y + car.length][car.x] == "-":
 						# valid move
-						outboard.cars[car.name].y += 1
+						outboard.cars[outboard.cars.index(car)].y += 1
 						outboard.update_current_state()
 						return outboard
 
@@ -108,7 +102,7 @@ class Breadth(object):
 				if car.y - 1 >= 0:
 					if outboard.current_state[car.y - 1][car.x] == "-":
 						# valid move
-						outboard.cars[car.name].y -= 1
+						outboard.cars[outboard.cars.index(car)].y -= 1
 						outboard.update_current_state()
 						return outboard
 
@@ -121,7 +115,7 @@ class Breadth(object):
 					# check if there is room on the board to move
 					if outboard.current_state[car.y][car.x + car.length] == "-":
 						# valid move
-						outboard.cars[car.name].x += 1
+						outboard.cars[outboard.cars.index(car)].x += 1
 						outboard.update_current_state()
 						return outboard
 
@@ -132,9 +126,25 @@ class Breadth(object):
 					# check if there is room on the board to move
 					if outboard.current_state[car.y][car.x - 1] == "-":
 						# valid move
-						outboard.cars[car.name].x -= 1
+						outboard.cars[outboard.cars.index(car)].x -= 1
 						outboard.update_current_state()
 						return outboard
 
 		# no valid moves
 		return False
+
+	def try_move(self, board, car, direction):
+		# find a posibility
+		possibility = self.move(board, car, direction)
+		
+		# if possibility is valid
+		if possibility != False:
+
+			# check if possibility is in archive
+			if hash(possibility) not in self.archive:
+				# add it to the list
+				self.archive[hash(possibility)] = 1
+				self.queue.put(possibility)
+				# # print("forward")
+				# print(board.cars)
+				# print(possibility)
