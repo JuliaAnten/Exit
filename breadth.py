@@ -9,10 +9,6 @@ class Breadth(object):
 	def __init__(self, startboard):
 		# root state of the board
 		self.rootboard = startboard
-		# series of moves that solves the board
-		self.solution = []
-		# winstate of the board
-		self.winstate = []
 		# counter
 		self.counter = 0
 
@@ -29,32 +25,29 @@ class Breadth(object):
 	def solve(self):
 		print("solving...")
 
-		print(hash(self.rootboard))
-		
-
 		# add rootboard to archive with cars as key and 1 as value
 		self.archive[hash(self.rootboard)] = 1
-		print(self.archive)
-		
+
 		# add rootboard to queue
 		self.queue.put(self.rootboard)
 
-		# while queue is not empty, keep looking		
+		# while queue is not empty, keep looking
 		print("while loop entering!")
 		while (self.queue.empty() != True):
 
 			# get first board from queue
 			current = self.queue.get()
 			print(current)
-		
+
 			# if current is a winner
 			if current.cars[0].x == 4:
 				print("solved!")
-				print(current.cars[0].name)
-				self.winstate = current.current_state
+				print(current)
+				print(current.solution_path)
+				print(len(current.solution_path))
 				# deze functie moeten we wat een passen
 				# hij returned nu wel the board maar die vangen we nergens op.
-				return
+				exit(0)
 			# otherwise generate all possible boards adjecent to current
 			# and add to board
 			self.get_possibilities(current)
@@ -73,7 +66,7 @@ class Breadth(object):
 
 			# try forward
 			self.try_move(board, car, 1);
-			
+
 			# try backward
 			self.try_move(board, car, 0);
 
@@ -94,6 +87,8 @@ class Breadth(object):
 						# valid move
 						outboard.cars[outboard.cars.index(car)].y += 1
 						outboard.update_current_state()
+						# add move to solution_path
+						outboard.solution_path.append(car.name + ", f")
 						return outboard
 
 			# if direction is backward
@@ -104,6 +99,8 @@ class Breadth(object):
 						# valid move
 						outboard.cars[outboard.cars.index(car)].y -= 1
 						outboard.update_current_state()
+						# add move to solution_path
+						outboard.solution_path.append(car.name + ", b")
 						return outboard
 
 		# if orientation is horizontal
@@ -117,6 +114,8 @@ class Breadth(object):
 						# valid move
 						outboard.cars[outboard.cars.index(car)].x += 1
 						outboard.update_current_state()
+						# add move to solution_path
+						outboard.solution_path.append(car.name + ", f")
 						return outboard
 
 			# if direction is backward
@@ -128,6 +127,8 @@ class Breadth(object):
 						# valid move
 						outboard.cars[outboard.cars.index(car)].x -= 1
 						outboard.update_current_state()
+						# add move to solution_path
+						outboard.solution_path.append(car.name + ", b")
 						return outboard
 
 		# no valid moves
@@ -136,7 +137,7 @@ class Breadth(object):
 	def try_move(self, board, car, direction):
 		# find a posibility
 		possibility = self.move(board, car, direction)
-		
+
 		# if possibility is valid
 		if possibility != False:
 

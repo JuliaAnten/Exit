@@ -2,12 +2,12 @@ from car import Car
 
 class Board(object):
 	"""docstring for Board"""
-	def __init__(self, path):
-		self.path = path
+	def __init__(self, file_path):
+		self.file_path = file_path
 		self.dimension = 0
 		self.cars = []
 		self.current_state = []
-		self.parent = "root"
+		self.solution_path = []
 
 	def __repr__(self):
 		string = ""
@@ -18,7 +18,7 @@ class Board(object):
 
 	def __hash__(self):
 		lst = []
-		"""hash() has to return an integer. 
+		"""hash() has to return an integer.
 		This is our solution, but there has to be a better way"""
 		[lst.append(str(hash(car))) for car in self.cars]
 		return int("".join(lst))
@@ -26,17 +26,16 @@ class Board(object):
 	def __eq__(self, other):
 		return hash(self) == hash(other)
 
-	
 	# initialize empty board
 	def make(self):
 		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
 		self.current_state = state
-	
+
 	# initialize board with cars on it
 	def setup_board(self):
 
 		# import start configuration from file
-		self.import_board(self.path)
+		self.import_board(self.file_path)
 
 		# create empty board
 		self.make()
@@ -64,7 +63,7 @@ class Board(object):
 
 	def update_current_state(self):
 
-		# creating a new empty board 
+		# creating a new empty board
 		self.make()
 
 		# looking for car(s) locations
@@ -78,7 +77,7 @@ class Board(object):
 					# placeing the car on the board (if updatede)
 					# the updatede location
 					self.current_state[car.y][car.x + i] = car.name[0]
-			
+
 			# if the are is v = verital
 			else:
 				for i in range(car.length):
@@ -87,15 +86,15 @@ class Board(object):
 		return True
 
 	# import board configuration and store contents accordingly
-	def import_board(self, path):
+	def import_board(self, file_path):
 		# opening the input file and reading it
-		file = open(path, "r")
+		file = open(file_path, "r")
 		if file == None:
 			print("Opening dictionary file failed")
 
 		# parse input file line by line
-		for line in file.readlines(): 
-			
+		for line in file.readlines():
+
 			# ignore irrelevant lines
 			if not line.startswith("#") or line.startswith(" ") or line.startswith("\n"):
 
@@ -112,13 +111,12 @@ class Board(object):
 
 					# populate car object
 					car = Car(words[0],
-							  int(words[1]), 
+							  int(words[1]),
 							  int(words[2]),
 							  int(words[3]),
 							  words[4])
-					
+
 					# append the car to the car dictionary
 					self.cars.append(car)
-					
+
 		file.close()
-		
