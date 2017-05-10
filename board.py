@@ -16,11 +16,23 @@ class Board(object):
 			string+="\n"
 		return string
 
+	def __eq__ (self, other):
+		return hash(self) == hash(other)
+
+	def __hash__ (self):
+		lst = []
+
+		for name, car in self.cars.items():
+			lst.append(str(hash(car)))
+
+		hs = int("".join(lst))
+		return hs
+
 	# initialize empty board
 	def make(self):
 		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
 		self.current_state = state
-	
+
 	# initialize board with cars on it
 	def setup_board(self):
 
@@ -53,7 +65,7 @@ class Board(object):
 
 	def update_current_state(self):
 
-		# creating a new empty board 
+		# creating a new empty board
 		self.make()
 
 		# looking for car(s) locations
@@ -67,7 +79,7 @@ class Board(object):
 					# placeing the car on the board (if updatede)
 					# the updatede location
 					self.current_state[car.y][car.x + i] = car.name[0]
-			
+
 			# if the are is v = verital
 			else:
 				for i in range(car.length):
@@ -83,8 +95,8 @@ class Board(object):
 			print("Opening dictionary file failed")
 
 		# parse input file line by line
-		for line in file.readlines(): 
-			
+		for line in file.readlines():
+
 			# ignore irrelevant lines
 			if not line.startswith("#") or line.startswith(" ") or line.startswith("\n"):
 
@@ -101,13 +113,12 @@ class Board(object):
 
 					# populate car object
 					car = Car(words[0],
-							  int(words[1]), 
+							  int(words[1]),
 							  int(words[2]),
 							  int(words[3]),
 							  words[4])
-					
+
 					# append the car to the car dictionary
 					self.cars[words[0]] = car
-					
+
 		file.close()
-		
