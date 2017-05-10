@@ -15,8 +15,8 @@ class Solver(object):
 
 		self.valid_count = 0
 
-		# immediately start the solving
-		self.solve()
+		# immediately start the solving, happens in test.py
+		# self.solve()
 
 	# returns true when the game is won
 	def check_endstate(self):
@@ -34,14 +34,17 @@ class Solver(object):
 		return False
 
 	def solve(self):
-		print("solving...")
+		#print("solving...")
 
 		while (self.check_endstate() == False):
 			# pick a random car from cars
 			random_name = random.choice(list(self.current.cars.keys()))
 			
+			# generate random direction (1 is forward, 0 is backward)
+			direction = random.randint(0,1)
+
 			# try moving the random car
-			self.move(self.current.cars[random_name])
+			self.move(self.current.cars[random_name],direction)
 
 			# print current board
 			# print(self.current)
@@ -49,18 +52,15 @@ class Solver(object):
 			# update self.counter
 			self.counter += 1
 
-			if self.counter % 100000 == 0:
-				print("counter valid: {}\n".format(self.valid_count))
+			#if self.counter % 100000 == 0:
+			#	print("counter valid: {}".format(self.valid_count))
 
-		print("solved:\n in {} moves\n moves: {}".format(self.counter, self.solution))
-		print("Valid steps count: {}\n".format(self.valid_count))
+			#print("solved:\n in {} moves".format(self.counter))
+			#print("Valid steps count: {}\n".format(self.valid_count))
+		print("{}".format(self.valid_count))
 
-	def move(self, car):
+	def move(self, car, direction):
 		"""Tries random moves on a car."""
-
-		# generate random direction (1 is forward, 0 is backward)
-		direction = random.randint(0,1)
-		# print("hoi: {}".format(self.current.current_state[car.x][car.y - 1]))
 
 		# vertical
 		if car.orientation == "v":	
@@ -79,7 +79,7 @@ class Solver(object):
 			else:
 				# one step backward
 				
-				if car.y - 1 > 0:
+				if car.y - 1 >= 0:
 					if self.current.current_state[car.y - 1][car.x] == "-":
 						# valid move
 						self.valid_count += 1
@@ -103,7 +103,7 @@ class Solver(object):
 			# if direction is backward
 			else:				
 				# one step backward
-				if car.x - 1 > 0:
+				if car.x - 1 >= 0:
 					# self.current.current_state gets 2d array representation of board
 					if self.current.current_state[car.y][car.x - 1] == "-":
 						# valid move
