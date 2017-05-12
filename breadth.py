@@ -37,10 +37,10 @@ class Breadth(object):
 
 			# get first board from queue
 			current = self.queue.get()
-			print(current)
+			# print(current)
 
 			# if current is a winner
-			if current.cars[0].x == 4:
+			if current.cars[0].x == self.rootboard.dimension - 2 :
 				print("solved!")
 				print(current)
 				print(current.solution_path)
