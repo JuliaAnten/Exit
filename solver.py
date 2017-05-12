@@ -21,7 +21,7 @@ class Solver(object):
 	# returns true when the game is won
 	def check_endstate(self):
 
-		if self.current.cars[0].x == 4:
+		if self.current.cars[0].x == self.current.dimension - 2:
 			return True
 
 		i = self.current.cars[0].length
