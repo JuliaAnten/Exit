@@ -3,9 +3,13 @@ from car import Car
 class Board(object):
 	"""docstring for Board"""
 	def __init__(self):
-		self.dimension = 0
+        # dimensions of the board 
+		self.dimension = ()
+        # list of car objects
 		self.cars = []
+        # the board status
 		self.current_state = []
+        # the solution to solving the board
 		self.solution_path = []
 
 	def __repr__(self):
@@ -26,18 +30,12 @@ class Board(object):
 		return hash(self) == hash(other)
 
 	# initialize empty board
-	def make(self):
+	def create_empty(self):
 		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
 		self.current_state = state
 
 	# initialize board with cars on it
-	def setup_board(self, path):
-
-		# import start configuration from file
-		self.import_board(path)
-
-		# create empty board
-		self.make()
+	def setup(self):
 
 		# initalize cars
 		for car in self.cars:
@@ -63,12 +61,10 @@ class Board(object):
 	def update_current_state(self):
 
 		# creating a new empty board
-		self.make()
+		self.create_empty()
 
 		# looking for car(s) locations
 		for car in self.cars:
-			# print all the cars that exsist
-			# print(car.name, "\t", car.x, car.y, car.length, car.orientation)
 
 			# if the car orientation is h = horizontal
 			if car.orientation == "h":
@@ -85,7 +81,7 @@ class Board(object):
 		return True
 
 	# import board configuration and store contents accordingly
-	def import_board(self, file_path):
+	def get_info(self, file_path):
 		# opening the input file and reading it
 		file = open(file_path, "r")
 		if file == None:

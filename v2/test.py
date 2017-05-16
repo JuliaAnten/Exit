@@ -15,32 +15,14 @@ from board import Board
 from breadth import Breadth
 from solver import Solver
 
-# check command lines arguments count
-if len(sys.argv) != 4:
-	print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth  number of tries")
-	sys.exit(1)
+path = "boards/03.txt"
 
-tries = int(sys.argv[3])
-path = str(sys.argv[1])
 
-count = 1
-
-# check given algorithm
-if sys.argv[2] == "random":
-	
-	while count < tries:
-		board = Board(path)
-		board.setup_board()
-		random = Solver(board)
-		random.solve()
-		count +=1
-elif sys.argv[2] == "breadth":
-	while count < tries:
-		board = Board()
-		board.setup_board(path)
-		breadth_class = Breadth(board)
-		breadth_class.solve()
-		count +=1
-else:
-	print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth  number of tries")
-	sys.exit(2)
+# creating empty board class
+board = Board()
+# reads car possitions and dimmension from file and saves the info in board
+board.get_info(path)
+board.create_empty()
+board.setup()
+breadth_class = Breadth(board)
+breadth_class.solve()

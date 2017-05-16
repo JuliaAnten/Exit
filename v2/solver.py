@@ -13,8 +13,6 @@ class Solver(object):
 
 		self.valid_count = 0
 
-		# immediately start the solving, happens in test.py
-		# self.solve()
 
 	# returns true when the game is won
 	def check_endstate(self):

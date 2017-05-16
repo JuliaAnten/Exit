@@ -8,7 +8,8 @@ class Breadth(object):
 
 	def __init__(self, root_board):
 		# root state of the board
-		self.rootboard = root_board
+		self.board = root_board
+
 		"""Breadth first specific"""
 		# set up empty archive
 		self.archive = {}
@@ -17,111 +18,112 @@ class Breadth(object):
 
 	def solve(self):
 		print("solving...\nthis board:")
-		print(self.rootboard)
+		print(self.board)
 
 		# add rootboard to archive with cars as key and 1 as value
-		self.archive[hash(self.rootboard)] = 1
+		self.archive[hash(self.board)] = 1
 
 		# add rootboard to queue
-		self.queue.put(self.rootboard)
+		self.queue.put(self.board)
 
 		# while queue is not empty, keep looking
 		while not self.queue.empty():
 
 			# get board from queue
-			current = self.queue.get()
+			parent_board = self.queue.get()
 
 			# if current is a winner
-			if current.cars[0].x == self.rootboard.dimension - 2 :
+			if parent_board.cars[0].x == self.board.dimension - 2 :
 				print("solved")
-				print(current)
-				print(current.solution_path)
-				print(len(current.solution_path))
+				print(parent_board)
+				print(parent_board.solution_path)
+				print(len(parent_board.solution_path))
 
 				exit(0)
 
 			# for every car try to move it backwards or forwards
-			for car in current.cars:
+			for car in parent_board.cars:
 				# try forward
-				self.try_move(current, car, 1)
+				self.try_move(parent_board, car, 1)
 
-				self.try_move(current, car, 0)
+				self.try_move(parent_board, car, 0)
 
 		print("not solved :(")
 
 
 	def try_move(self, board, car, direction):
 		# find a posibility
-		possibility = self.move(board, car, direction)
+		child_board = self.move(board, car, direction)
 
 		# if possibility is valid
-		if possibility:
+		if child_board:
 			# check if possibility is in archive
-			if hash(possibility) not in self.archive:
+			if hash(child_board) not in self.archive:
 				# add it to the list
-				self.archive[hash(possibility)] = 1
-				self.queue.put(possibility)
+				self.archive[hash(child_board)] = 1
+				self.queue.put(child_board)
 
 
 	def move(self, board, car, direction):
 		"""Tries random moves on a car.
 		   Returns a child board if move is valid, otherwise returns false."""
-		outboard = copy.deepcopy(board)
-
+		child_board = copy.deepcopy(board)
+            
+            
 		# vertical
 		if car.orientation == "v":
 			# if direction is forward
 			if direction == 1:
 				# one step forward
 				# check if carmove goes out of bounds
-				if car.y + car.length < outboard.dimension:
-					if outboard.current_state[car.y + car.length][car.x] == "-":
+				if car.y + car.length < child_board.dimension:
+					if child_board.current_state[car.y + car.length][car.x] == "-":
 						# valid move
-						outboard.cars[outboard.cars.index(car)].y += 1
-						outboard.update_current_state()
+						child_board.cars[child_board.cars.index(car)].y += 1
+						child_board.update_current_state()
 						# add move to solution_path
-						outboard.solution_path.append(car.name + ", f")
-						return outboard
+						child_board.solution_path.append(car.name + ", ↑")
+						return child_board
 
 			# if direction is backward
 			else:
 				# one step backward
 				if car.y - 1 >= 0:
-					if outboard.current_state[car.y - 1][car.x] == "-":
+					if child_board.current_state[car.y - 1][car.x] == "-":
 						# valid move
-						outboard.cars[outboard.cars.index(car)].y -= 1
-						outboard.update_current_state()
+						child_board.cars[child_board.cars.index(car)].y -= 1
+						child_board.update_current_state()
 						# add move to solution_path
-						outboard.solution_path.append(car.name + ", b")
-						return outboard
+						child_board.solution_path.append(car.name + ", ↓")
+						return child_board
 
 		# if orientation is horizontal
 		else:
 			# if direction is forward
 			if direction == 1:
 				# one step forward
-				if car.x + car.length < outboard.dimension:
+				if car.x + car.length < child_board.dimension:
 					# check if there is room on the board to move
-					if outboard.current_state[car.y][car.x + car.length] == "-":
+					if child_board.current_state[car.y][car.x + car.length] == "-":
 						# valid move
-						outboard.cars[outboard.cars.index(car)].x += 1
-						outboard.update_current_state()
+						child_board.cars[child_board.cars.index(car)].x += 1
+						child_board.update_current_state()
 						# add move to solution_path
-						outboard.solution_path.append(car.name + ", f")
-						return outboard
+						child_board.solution_path.append(car.name + ", →")
+						return child_board
 
 			# if direction is backward
 			else:
 				# one step backward
 				if car.x - 1 >= 0:
 					# check if there is room on the board to move
-					if outboard.current_state[car.y][car.x - 1] == "-":
+					if child_board.current_state[car.y][car.x - 1] == "-":
 						# valid move
-						outboard.cars[outboard.cars.index(car)].x -= 1
-						outboard.update_current_state()
+						child_board.cars[child_board.cars.index(car)].x -= 1
+						child_board.update_current_state()
 						# add move to solution_path
-						outboard.solution_path.append(car.name + ", b")
-						return outboard
+						child_board.solution_path.append(car.name + ", git←")
+						return child_board
 
 		# no valid moves
 		return False
