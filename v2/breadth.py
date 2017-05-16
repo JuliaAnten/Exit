@@ -43,6 +43,7 @@ class Breadth(object):
 
 			# for every car try to move it backwards or forwards
 			for car in parent_board.cars:
+                
 				# try forward
 				self.try_move(parent_board, car, 1)
 
