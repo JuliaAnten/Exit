@@ -39,7 +39,7 @@ class Solver(object):
 		while (self.check_endstate() == False):
 			# pick a random car from cars
 			random_car = random.randint(0, len(self.current.cars) - 1)
-			
+
 			# generate random direction (1 is forward, 0 is backward)
 			direction = random.randint(0,1)
 
@@ -63,7 +63,7 @@ class Solver(object):
 		"""Tries random moves on a car."""
 
 		# vertical
-		if car.orientation == "v":	
+		if car.orientation == "v":
 			# if direction is forward
 			if direction == 1:
 				# one step forward
@@ -74,11 +74,11 @@ class Solver(object):
 						self.valid_count += 1
 						self.current.cars[self.current.cars.index(car)].y += 1
 						self.solution.append(str(car.name + ", forward"))
-				
+
 			# if direction is backward
 			else:
 				# one step backward
-				
+
 				if car.y - 1 >= 0:
 					if self.current.current_state[car.y - 1][car.x] == "-":
 						# valid move
@@ -89,8 +89,8 @@ class Solver(object):
 
 		# if orientation is horizontal
 		else:
-			# if direction is forward			
-			if direction == 1:					
+			# if direction is forward
+			if direction == 1:
 				# one step forward
 				if car.x + car.length < self.current.dimension:
 					# self.current.current_state gets 2d array representation of board
@@ -99,9 +99,9 @@ class Solver(object):
 						self.valid_count += 1
 						self.current.cars[self.current.cars.index(car)].x += 1
 						self.solution.append(str(car.name + ", forward"))
-			
+
 			# if direction is backward
-			else:				
+			else:
 				# one step backward
 				if car.x - 1 >= 0:
 					# self.current.current_state gets 2d array representation of board
@@ -112,4 +112,3 @@ class Solver(object):
 						self.solution.append(str(car.name + ", backward"))
 
 		self.current.update_current_state()
-
