@@ -14,11 +14,12 @@ import cProfile
 from car import Car
 from board import Board
 from breadth import Breadth
+from depth import Depth
 from solver import Solver
 
 # check command lines arguments count
 if len(sys.argv) != 4:
-	print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth  number of tries")
+	print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
 	sys.exit(1)
 
 tries = int(sys.argv[3])
@@ -48,8 +49,17 @@ elif sys.argv[2] == "breadth":
 	board.setup()
 	breadth_class = Breadth(board)
 	cProfile.run('breadth_class.solve()')
+elif sys.argv[2] == "depth":
+	# creating empty board class
+	board = Board()
+	# reads car possitions and dimmension from file and saves the info in board
+	board.get_info(path)
+	board.create_empty()
+	board.setup()
+	depth_class = Depth(board)
+	cProfile.run('depth_class.solve()')
 else:
-	print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth  number of tries")
+	print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
 	sys.exit(2)
 
 

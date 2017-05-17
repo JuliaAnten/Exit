@@ -66,9 +66,13 @@ class Breadth(object):
 
 
 	def move(self, board, car, direction):
-		"""Tries random moves on a car.
-		   Returns a child board if move is valid, otherwise returns false."""
-		# child_board = copy.deepcopy(board)
+		"""
+		Tries random moves on a car. Returns a child board if move is valid,
+		otherwise returns false.
+
+		Uses pickling instead of deepcopying. Argumentation for choice: 
+		http://stackoverflow.com/questions/24756712/deepcopy-is-extremely-slow/29385667#29385667
+		"""
 
 		# vertical
 		if car.orientation == "v":
