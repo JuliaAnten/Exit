@@ -10,13 +10,14 @@
 ###############################################
 
 import sys
+import cProfile
+
 from car import Car
 from board import Board
 from breadth import Breadth
 from solver import Solver
 
-path = "boards/03.txt"
-
+path = "boards/01.txt"
 
 # creating empty board class
 board = Board()
@@ -25,4 +26,4 @@ board.get_info(path)
 board.create_empty()
 board.setup()
 breadth_class = Breadth(board)
-breadth_class.solve()
+cProfile.run('breadth_class.solve()')

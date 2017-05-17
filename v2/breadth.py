@@ -2,6 +2,7 @@ from board import Board
 from queue import Queue
 import copy
 import sys
+import pickle
 
 class Breadth(object):
 	"""docstring for Solver"""
@@ -38,8 +39,7 @@ class Breadth(object):
 				print(parent_board)
 				print(parent_board.solution_path)
 				print(len(parent_board.solution_path))
-
-				exit(0)
+				return
 
 			# for every car try to move it backwards or forwards
 			for car in parent_board.cars:
@@ -68,17 +68,17 @@ class Breadth(object):
 	def move(self, board, car, direction):
 		"""Tries random moves on a car.
 		   Returns a child board if move is valid, otherwise returns false."""
-		child_board = copy.deepcopy(board)
-            
-            
+		# child_board = copy.deepcopy(board)
+
 		# vertical
 		if car.orientation == "v":
 			# if direction is forward
 			if direction == 1:
 				# one step forward
 				# check if carmove goes out of bounds
-				if car.y + car.length < child_board.dimension:
-					if child_board.current_state[car.y + car.length][car.x] == "-":
+				if car.y + car.length < board.dimension:
+					if board.current_state[car.y + car.length][car.x] == "-":
+						child_board = copy.deepcopy(board)
 						# valid move
 						child_board.cars[child_board.cars.index(car)].y += 1
 						child_board.update_current_state()
@@ -90,7 +90,8 @@ class Breadth(object):
 			else:
 				# one step backward
 				if car.y - 1 >= 0:
-					if child_board.current_state[car.y - 1][car.x] == "-":
+					if board.current_state[car.y - 1][car.x] == "-":
+						child_board = copy.deepcopy(board)
 						# valid move
 						child_board.cars[child_board.cars.index(car)].y -= 1
 						child_board.update_current_state()
@@ -103,9 +104,10 @@ class Breadth(object):
 			# if direction is forward
 			if direction == 1:
 				# one step forward
-				if car.x + car.length < child_board.dimension:
+				if car.x + car.length < board.dimension:
 					# check if there is room on the board to move
-					if child_board.current_state[car.y][car.x + car.length] == "-":
+					if board.current_state[car.y][car.x + car.length] == "-":
+						child_board = copy.deepcopy(board)
 						# valid move
 						child_board.cars[child_board.cars.index(car)].x += 1
 						child_board.update_current_state()
@@ -118,12 +120,13 @@ class Breadth(object):
 				# one step backward
 				if car.x - 1 >= 0:
 					# check if there is room on the board to move
-					if child_board.current_state[car.y][car.x - 1] == "-":
+					if board.current_state[car.y][car.x - 1] == "-":
+						child_board = copy.deepcopy(board)
 						# valid move
 						child_board.cars[child_board.cars.index(car)].x -= 1
 						child_board.update_current_state()
 						# add move to solution_path
-						child_board.solution_path.append(car.name + ", git←")
+						child_board.solution_path.append(car.name + ", ←")
 						return child_board
 
 		# no valid moves
