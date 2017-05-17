@@ -40,16 +40,14 @@ if sys.argv[2] == "random":
 		random.solve()
 		count +=1
 elif sys.argv[2] == "breadth":
-	while count < tries:
-		# creating empty board class
-		board = Board()
-		# reads car possitions and dimmension from file and saves the info in board
-		board.get_info(path)
-		board.create_empty()
-		board.setup()
-		breadth_class = Breadth(board)
-		cProfile.run('breadth_class.solve()')
-		count +=1
+	# creating empty board class
+	board = Board()
+	# reads car possitions and dimmension from file and saves the info in board
+	board.get_info(path)
+	board.create_empty()
+	board.setup()
+	breadth_class = Breadth(board)
+	cProfile.run('breadth_class.solve()')
 else:
 	print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth  number of tries")
 	sys.exit(2)

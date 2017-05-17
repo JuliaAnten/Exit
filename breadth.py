@@ -78,7 +78,7 @@ class Breadth(object):
 				# check if carmove goes out of bounds
 				if car.y + car.length < board.dimension:
 					if board.current_state[car.y + car.length][car.x] == "-":
-						child_board = copy.deepcopy(board)
+						child_board = pickle.loads(pickle.dumps(board, -1))
 						# valid move
 						child_board.cars[child_board.cars.index(car)].y += 1
 						child_board.update_current_state()
@@ -91,7 +91,7 @@ class Breadth(object):
 				# one step backward
 				if car.y - 1 >= 0:
 					if board.current_state[car.y - 1][car.x] == "-":
-						child_board = copy.deepcopy(board)
+						child_board = pickle.loads(pickle.dumps(board, -1))
 						# valid move
 						child_board.cars[child_board.cars.index(car)].y -= 1
 						child_board.update_current_state()
@@ -107,7 +107,7 @@ class Breadth(object):
 				if car.x + car.length < board.dimension:
 					# check if there is room on the board to move
 					if board.current_state[car.y][car.x + car.length] == "-":
-						child_board = copy.deepcopy(board)
+						child_board = pickle.loads(pickle.dumps(board, -1))
 						# valid move
 						child_board.cars[child_board.cars.index(car)].x += 1
 						child_board.update_current_state()
@@ -121,7 +121,7 @@ class Breadth(object):
 				if car.x - 1 >= 0:
 					# check if there is room on the board to move
 					if board.current_state[car.y][car.x - 1] == "-":
-						child_board = copy.deepcopy(board)
+						child_board = pickle.loads(pickle.dumps(board, -1))
 						# valid move
 						child_board.cars[child_board.cars.index(car)].x -= 1
 						child_board.update_current_state()
