@@ -10,6 +10,7 @@
 ###############################################
 
 import sys
+import cProfile
 from car import Car
 from board import Board
 from breadth import Breadth
@@ -22,13 +23,6 @@ if len(sys.argv) != 4:
 
 tries = int(sys.argv[3])
 path = str(sys.argv[1])
-# initialize board and set up the game 
-board = Board(path)
-board.setup_board()
-
-
-solver = Solver(board)
-solver.solve()
 
 count = 1
 
@@ -36,17 +30,25 @@ count = 1
 if sys.argv[2] == "random":
 	
 	while count < tries:
-		board = Board(path)
-		board.setup_board()
-		solver = Solver(board)
-		solver.solve()
+		board = Board()
+		# reads car possitions and dimmension from file and saves the info in board
+		board.get_info(path)
+		board.create_empty()
+		board.setup()
+
+		random = Solver(board)
+		random.solve()
 		count +=1
 elif sys.argv[2] == "breadth":
 	while count < tries:
-		board = Board(path)
-		board.setup_board()
-		solver = Breadth(board)
-		solver.solve()
+		# creating empty board class
+		board = Board()
+		# reads car possitions and dimmension from file and saves the info in board
+		board.get_info(path)
+		board.create_empty()
+		board.setup()
+		breadth_class = Breadth(board)
+		cProfile.run('breadth_class.solve()')
 		count +=1
 else:
 	print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth  number of tries")

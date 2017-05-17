@@ -10,13 +10,9 @@ class Solver(object):
 		self.winstate = []
 		# series of moves that solves the board
 		self.solution = []
-		# counter
-		self.counter = 0
 
 		self.valid_count = 0
 
-		# immediately start the solving, happens in test.py
-		# self.solve()
 
 	# returns true when the game is won
 	def check_endstate(self):
@@ -50,7 +46,7 @@ class Solver(object):
 			# print(self.current)
 
 			# update self.counter
-			self.counter += 1
+			#self.counter += 1
 
 			#if self.counter % 100000 == 0:
 			#	print("counter valid: {}".format(self.valid_count))
