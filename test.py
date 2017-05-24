@@ -12,7 +12,6 @@
 import sys
 import cProfile
 import time
-from car import Car
 from board import Board
 from breadth import Breadth
 from depth import Depth

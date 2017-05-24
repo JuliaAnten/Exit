@@ -1,24 +1,27 @@
 from board import Board
 from queue import Queue
+import mover
+import validator
 import sys
 import pickle
 import time
 
 class Breadth(object):
 	"""docstring for Breadth"""
+			
 
 	def __init__(self, root_board):
 		# root state of the board
 		self.board = root_board
 
-		"""Breadth first specific"""
 		# set up empty archive
 		self.archive = {}
+		
 		# set up queue
 		self.queue = Queue()
 
 	def solve(self):
-		print("solving...\nthis board:")
+		print("solving...\nthis board: \n")
 		print(self.board)
 
 		# add rootboard to archive with cars as key and 1 as value
@@ -34,7 +37,7 @@ class Breadth(object):
 			parent_board = self.queue.get()
 
 			# if current is a winner
-			if parent_board.cars[0].x == self.board.dimension - 2 :
+			if validator.check_endstate(parent_board):
 				print("solved")
 				print(parent_board)
 				print(parent_board.solution_path)
@@ -44,94 +47,27 @@ class Breadth(object):
 			# for every car try to move it backwards or forwards
 			for car in parent_board.cars:
                 
-				# try forward
-				self.try_move(parent_board, car, 1)
-
-				self.try_move(parent_board, car, 0)
+				# try forward and backward
+				self.try_move(parent_board, car)
 
 		print("not solved :(")
 
 
-	def try_move(self, board, car, direction):
-		# find a posibility
-		child_board = self.move(board, car, direction)
+	# tries moving forward and backward
+	def try_move(self, board, car):
+		direction = 0
+		
+		for i in range(2):
+			# find a posibility
+			child_board = mover.move(board, car, direction)
 
-		# if possibility is valid
-		if child_board:
-			# check if possibility is in archive
-			if hash(child_board) not in self.archive:
-				# add it to the list
-				self.archive[hash(child_board)] = 1
-				self.queue.put(child_board)
+			# if possibility is valid
+			if child_board:
+				# check if possibility is in archive
+				if hash(child_board) not in self.archive:
+					# add it to the list
+					self.archive[hash(child_board)] = 1
+					self.queue.put(child_board)
 
-
-	def move(self, board, car, direction):
-		"""
-		Tries random moves on a car. Returns a child board if move is valid,
-		otherwise returns false.
-
-		Uses pickling instead of deepcopying. Argumentation for choice: 
-		http://stackoverflow.com/questions/24756712/deepcopy-is-extremely-slow/29385667#29385667
-		"""
-
-		# vertical
-		if car.orientation == "v":
-			# if direction is forward
-			if direction == 1:
-				# one step forward
-				# check if carmove goes out of bounds
-				if car.y + car.length < board.dimension:
-					if board.current_state[car.y + car.length][car.x] == "-":
-						child_board = pickle.loads(pickle.dumps(board, -1))
-						# valid move
-						child_board.cars[child_board.cars.index(car)].y += 1
-						child_board.update_current_state()
-						# add move to solution_path
-						child_board.solution_path.append(car.name + ", ↑")
-						return child_board
-
-			# if direction is backward
-			else:
-				# one step backward
-				if car.y - 1 >= 0:
-					if board.current_state[car.y - 1][car.x] == "-":
-						child_board = pickle.loads(pickle.dumps(board, -1))
-						# valid move
-						child_board.cars[child_board.cars.index(car)].y -= 1
-						child_board.update_current_state()
-						# add move to solution_path
-						child_board.solution_path.append(car.name + ", ↓")
-						return child_board
-
-		# if orientation is horizontal
-		else:
-			# if direction is forward
-			if direction == 1:
-				# one step forward
-				if car.x + car.length < board.dimension:
-					# check if there is room on the board to move
-					if board.current_state[car.y][car.x + car.length] == "-":
-						child_board = pickle.loads(pickle.dumps(board, -1))
-						# valid move
-						child_board.cars[child_board.cars.index(car)].x += 1
-						child_board.update_current_state()
-						# add move to solution_path
-						child_board.solution_path.append(car.name + ", →")
-						return child_board
-
-			# if direction is backward
-			else:
-				# one step backward
-				if car.x - 1 >= 0:
-					# check if there is room on the board to move
-					if board.current_state[car.y][car.x - 1] == "-":
-						child_board = pickle.loads(pickle.dumps(board, -1))
-						# valid move
-						child_board.cars[child_board.cars.index(car)].x -= 1
-						child_board.update_current_state()
-						# add move to solution_path
-						child_board.solution_path.append(car.name + ", ←")
-						return child_board
-
-		# no valid moves
-		return False
+			# reverse direction
+			direction = 1
