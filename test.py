@@ -11,67 +11,83 @@
 
 import sys
 import cProfile
+import time
 from car import Car
 from board import Board
 from breadth import Breadth
 from depth import Depth
-from solver import Solver
+from rand import Random
 
-# check command lines arguments count
-if len(sys.argv) != 4:
-	print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
-	sys.exit(1)
+def main():
+	# check command lines arguments count
+	if len(sys.argv) != 4:
+		print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
+		sys.exit(1)
 
-tries = int(sys.argv[3])
-path = str(sys.argv[1])
+	# defines how many times random should try to find a solution
+	tries = int(sys.argv[3])
+	# defines the path to the board that needs solving
+	path = str(sys.argv[1])
+	# counts how many solutions have been found by random
+	count = 0
 
-count = 1
+	# set to true to get detailed benchmarking info
+	detailed_benchmarking = False
 
-# check given algorithm
-if sys.argv[2] == "random":
-	
-	while count < tries:
-		board = Board()
-		# reads car possitions and dimmension from file and saves the info in board
-		board.get_info(path)
-		board.create_empty()
-		board.setup()
+	# for benchmarking since cProfile slows everything down
+	t0 = time.time()
 
-		random = Solver(board)
-		random.solve()
-		count +=1
-elif sys.argv[2] == "breadth":
+
+	# check given algorithm
+	if sys.argv[2] == "random":
+		while count < tries:
+			board = setup_board(path)
+			random = Random(board)
+			random.solve()
+			count +=1
+
+	# solve using breadth first
+	elif sys.argv[2] == "breadth":
+		board = setup_board(path)
+		breadth_class = Breadth(board)
+		
+		# start solving
+		if detailed_benchmarking == True:
+			cProfile.run('breadth_class.solve()')
+		else:
+			breadth_class.solve()
+
+	# solve using depth first
+	elif sys.argv[2] == "depth":
+		board = setup_board(path)
+		
+		depth_class = Depth(board)
+		
+		# start solving
+		if detailed_benchmarking == True:
+			cProfile.run('depth_class.solve()')
+		else:
+			depth_class.solve()
+
+	# invalid commandline arguments
+	else:
+		print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
+		sys.exit(2)
+
+	# print benchmark time
+	t1 = time.time()
+	print(t1 - t0)
+
+# sets up a new board
+def setup_board(path):
 	# creating empty board class
 	board = Board()
 	# reads car possitions and dimmension from file and saves the info in board
 	board.get_info(path)
 	board.create_empty()
 	board.setup()
-	breadth_class = Breadth(board)
-	cProfile.run('breadth_class.solve()')
-elif sys.argv[2] == "depth":
-	# creating empty board class
-	board = Board()
-	# reads car possitions and dimmension from file and saves the info in board
-	board.get_info(path)
-	board.create_empty()
-	board.setup()
-	depth_class = Depth(board)
-	cProfile.run('depth_class.solve()')
-else:
-	print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
-	sys.exit(2)
+	return board
 
-
-
-# print board
-#print("\nStart board:")
-#print(board)
-
-# start the solving
-
-
-
-# # printing updated board
-#print("\nEnd board:")
-#print(solver.cars)
+# calls main
+if __name__ == "__main__":
+	main()

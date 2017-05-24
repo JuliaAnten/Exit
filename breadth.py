@@ -1,11 +1,11 @@
 from board import Board
 from queue import Queue
-import copy
 import sys
 import pickle
+import time
 
 class Breadth(object):
-	"""docstring for Solver"""
+	"""docstring for Breadth"""
 
 	def __init__(self, root_board):
 		# root state of the board
