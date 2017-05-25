@@ -39,7 +39,7 @@ def vert_forward(board, car, direction):
 			child_board.cars[child_board.cars.index(car)].y += 1
 			child_board.update_current_state()
 			# add move to solution_path
-			child_board.solution_path.append(car.name + "↑")
+			child_board.solution_path.append(car.name + "↓")
 			return child_board
 	
 	# returns if there are no valid moves
@@ -54,7 +54,7 @@ def vert_backward(board, car, direction):
 			child_board.cars[child_board.cars.index(car)].y -= 1
 			child_board.update_current_state()
 			# add move to solution_path
-			child_board.solution_path.append(car.name + "↓")
+			child_board.solution_path.append(car.name + "↑")
 			return child_board
 	
 	# returns if there are no valid moves
