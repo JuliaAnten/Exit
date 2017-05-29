@@ -1,15 +1,27 @@
+###############################################
+# 
+# Code written by: 
+# - Julia Anten
+# - Sander Swierts 
+# - Maxim Stomphorst
+# 
+# This call creats a rush hour board class with its components.
+#
+###############################################
+
 from car import Car
 
 class Board(object):
+
 	"""docstring for Board"""
 	def __init__(self):
-        # dimensions of the board 
+        # dimensions of the board
 		self.dimension = ()
         # list of car objects
 		self.cars = []
         # the board status
 		self.current_state = []
-        # the solution to solving the board
+        # path to solution when a new child is created it appends the move
 		self.solution_path = []
 
 	def __repr__(self):
@@ -19,38 +31,50 @@ class Board(object):
 			string+="\n"
 		return string
 
-	def __hash__(self):
-		lst = []
-		"""hash() has to return an integer.
-		This is our solution, but there has to be a better way"""
-		[lst.append(str(hash(car))) for car in self.cars]
-		return int("".join(lst))
 
+	"""If hash is called's on board it hashs the board
+	by all the cars that are on the board.
+	name, x position, and y position this done in the car class.
+	a hash has to return a interger that way the code converts a string."""	
+	def __hash__(self):
+		a_hash = []
+		[a_hash .append(str(hash(car))) for car in self.cars]
+		return int("".join(a_hash))
+
+	"""If a equality test is called on the class 
+	this determines how it is handelt."""
 	def __eq__(self, other):
 		return hash(self) == hash(other)
 
-	# initialize empty board
+	"""Creates a empty doubly linked list,
+	a representation of the rush hour board."""
 	def create_empty(self):
-		state = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
-		self.current_state = state
+		empty_board = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
+		self.current_state = empty_board
 
-	# initialize board with cars on it
+	"""Places the cars from the car class on the empty board"""
 	def setup(self):
 
-		# initalize cars
+		# selects every car one by one
 		for car in self.cars:
+
+			# check what orientation the car is in (h = horizontal)
 			if car.orientation == "h":
 				for i in range(car.length):
+
+					# check if a car doesn't go out of bounds
 					if (car.x + i) >= self.dimension:
-						print("car {}: x out of range: {}".format(car.name, (car.x+i)))
+						print("car {}: x out of range: {}".format(car.name, (car.x +i)))
 					elif car.y >= self.dimension:
 						print("car {}: y out of range: {}".format(car.name, (car.y)))
+					# place car on the board
 					else:
 						self.current_state[car.y][car.x + i] = car.name[0]
 
-
+			# v = verital
 			if car.orientation == "v":
 				for i in range(car.length):
+
 					if (car.y + i) >= self.dimension:
 						print("car {}: y out of range: {}".format(car.name, (car.y+i)))
 					elif car.x >= self.dimension:
@@ -58,6 +82,7 @@ class Board(object):
 					else:
 						self.current_state[car.y + i][car.x] = car.name[0]
 
+	""" """
 	def update_current_state(self):
 
 		# creating a new empty board
@@ -70,7 +95,6 @@ class Board(object):
 			if car.orientation == "h":
 				for i in range(car.length):
 					# placeing the car on the board (if updatede)
-					# the updatede location
 					self.current_state[car.y][car.x + i] = car.name[0]
 
 			# if the are is v = verital
@@ -80,7 +104,8 @@ class Board(object):
 
 		return True
 
-	# import board configuration and store contents accordingly
+	"""Imports the car locations from a file stroing the information in as as list 
+	in self.cars."""
 	def get_info(self, file_path):
 		# opening the input file and reading it
 		file = open(file_path, "r")

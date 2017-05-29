@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
 
 ###############################################
+# 
+# Code written by: 
+# - Julia Anten
+# - Sander Swierts 
+# - Maxim Stomphorst
 #
-# this is the controller for the test.py game
+# This is the controller for the test.py game.
 #
 # Usage: ./test.py path/to/board random/breadth
-#
+# 
+# Its functions:
+# 01 - It checks for the proper use of the program.
+# 02 - It creates a board class with al its necessary components.
+# 03 - It calls solve methode of choice.
 #
 ###############################################
 
@@ -18,6 +27,7 @@ from depth import Depth
 from rand import Random
 
 def main():
+
 	# check command lines arguments count
 	if len(sys.argv) != 4:
 		print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
@@ -36,13 +46,19 @@ def main():
 	# for benchmarking since cProfile slows everything down
 	t0 = time.time()
 
-
 	# check given algorithm
 	if sys.argv[2] == "random":
 		while count < tries:
+			time0 = time.time()
+
 			board = setup_board(path)
 			random = Random(board)
 			random.solve()
+
+			time1 = time.time()
+			print("singel time:")
+			print(time1 - time0)
+
 			count +=1
 
 	# solve using breadth first
@@ -50,11 +66,13 @@ def main():
 		board = setup_board(path)
 		breadth_class = Breadth(board)
 		
+		cProfile.run("breadth_class.solve()")
+
 		# start solving
-		if detailed_benchmarking == True:
-			cProfile.run('breadth_class.solve()')
-		else:
-			breadth_class.solve()
+		# if detailed_benchmarking == True:
+			
+		# else:
+		# 	breadth_class.solve()
 
 	# solve using depth first
 	elif sys.argv[2] == "depth":
@@ -75,18 +93,22 @@ def main():
 
 	# print benchmark time
 	t1 = time.time()
+	print("Total time:")
 	print(t1 - t0)
 
-# sets up a new board
+"""sets up a new board""" 
 def setup_board(path):
 	# creating empty board class
 	board = Board()
 	# reads car possitions and dimmension from file and saves the info in board
 	board.get_info(path)
+	# creats a empty board
 	board.create_empty()
+	# places the car's from the file on the just created empty board. 
 	board.setup()
+
+	# returns a filled board class ready for any solve methode
 	return board
 
-# calls main
 if __name__ == "__main__":
 	main()

@@ -1,3 +1,16 @@
+###############################################
+# 
+# Code written by: 
+# - Julia Anten
+# - Sander Swierts 
+# - Maxim Stomphorst
+#
+# This is our emplementation of a deth first search DFS.
+# 
+#
+###############################################
+
+
 from board import Board
 from queue import LifoQueue
 import sys
@@ -8,16 +21,23 @@ import validator
 class Depth(object):
 	"""docstring for Solver"""
 
+	""" Contains the Board class that contains the Car class.
+	A DFS need a archive to check if a board is already made and it need a Stack
+	to pick the next board to search.
+	"""
+
 	def __init__(self, root_board):
 		# root state of the board
 		self.board = root_board
 
-		"""Depth first specific"""
 		# set up empty archive
 		self.archive = {}
+
 		# set up queue
 		self.queue = LifoQueue()
 
+
+	"""Solver is the emplementation of the BFS algorithm"""
 	def solve(self):
 		print("solving...\nthis board:")
 		print(self.board)

@@ -1,3 +1,15 @@
+###############################################
+# 
+# Code written by: 
+# - Julia Anten
+# - Sander Swierts 
+# - Maxim Stomphorst
+#
+# This is our emplementation of a breadth first search BFS.
+# 
+#
+###############################################
+
 from board import Board
 from queue import Queue
 import mover
@@ -9,7 +21,10 @@ import time
 class Breadth(object):
 	"""docstring for Breadth"""
 			
-
+	"""Contains the Board class that contains the Car class.
+	A BFS need a archive to check if a board is already made and it need a Queue
+	to pick the next board to search.
+	"""
 	def __init__(self, root_board):
 		# root state of the board
 		self.board = root_board
@@ -20,7 +35,11 @@ class Breadth(object):
 		# set up queue
 		self.queue = Queue()
 
+
+	"""Solver is the emplementation of the BFS algorithm"""
 	def solve(self):
+
+		# print the root board the board that the the algorithm is trying to solve it
 		print("solving...\nthis board: \n")
 		print(self.board)
 
@@ -36,7 +55,7 @@ class Breadth(object):
 			# get board from queue
 			parent_board = self.queue.get()
 
-			# if current is a winner
+			# if the board is in a win possition
 			if validator.check_endstate(parent_board):
 				print("solved")
 				print(parent_board)
@@ -44,16 +63,18 @@ class Breadth(object):
 				print(len(parent_board.solution_path))
 				return
 
-			# for every car try to move it backwards or forwards
+			# if the board is not solved
+			# try to move every car creating child_boards
 			for car in parent_board.cars:
                 
-				# try forward and backward
+				# try to move a car forward and backward
 				self.try_move(parent_board, car)
-
+				
+		# when the queue is empty the solotion is not found
 		print("not solved :(")
 
 
-	# tries moving forward and backward
+	"""tries moving forward and backward"""
 	def try_move(self, board, car):
 		direction = 0
 		
