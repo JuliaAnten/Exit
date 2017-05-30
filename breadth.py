@@ -19,12 +19,10 @@ import pickle
 import time
 
 class Breadth(object):
-	"""docstring for Breadth"""
 			
 	"""Contains the Board class that contains the Car class.
 	A BFS need a archive to check if a board is already made and it need a Queue
-	to pick the next board to search.
-	"""
+	to pick the next board from too search."""
 	def __init__(self, root_board):
 		# root state of the board
 		self.board = root_board
@@ -36,7 +34,10 @@ class Breadth(object):
 		self.queue = Queue()
 
 
-	"""Solver is the emplementation of the BFS algorithm"""
+	"""The BFS algorithm.
+	Input is a Board class.
+	Output no output is return.
+	It prints the solution and the solved board."""
 	def solve(self):
 
 		# print the root board the board that the the algorithm is trying to solve it
@@ -63,19 +64,19 @@ class Breadth(object):
 				print(len(parent_board.solution_path))
 				return
 
-			# if the board is not solved
-			# try to move every car creating child_boards
+			# for every car try to move it backwards and forwards
 			for car in parent_board.cars:
                 
-				# try to move a car forward and backward
 				self.try_move(parent_board, car)
 				
 		# when the queue is empty the solotion is not found
 		print("not solved :(")
 
 
-	"""tries moving forward and backward"""
+	"""Tries moving a car forward than backwards."""
 	def try_move(self, board, car):
+
+		# move car forward
 		direction = 0
 		
 		for i in range(2):
@@ -86,9 +87,10 @@ class Breadth(object):
 			if child_board:
 				# check if possibility is in archive
 				if hash(child_board) not in self.archive:
-					# add it to the list
+					# add board to archive
 					self.archive[hash(child_board)] = 1
+					# add the board to the queue
 					self.queue.put(child_board)
 
-			# reverse direction
+			# reverse direction try to move car backwards
 			direction = 1

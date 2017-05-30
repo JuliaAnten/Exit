@@ -19,13 +19,10 @@ import mover
 import validator
 
 class Depth(object):
-	"""docstring for Solver"""
 
-	""" Contains the Board class that contains the Car class.
+	"""Contains the Board class that contains the Car class.
 	A DFS need a archive to check if a board is already made and it need a Stack
-	to pick the next board to search.
-	"""
-
+	to pick the next board to search."""
 	def __init__(self, root_board):
 		# root state of the board
 		self.board = root_board
@@ -39,6 +36,8 @@ class Depth(object):
 
 	"""Solver is the emplementation of the BFS algorithm"""
 	def solve(self):
+
+		# print the root board the board that the the algorithm is trying to solve it
 		print("solving...\nthis board:")
 		print(self.board)
 
@@ -62,12 +61,13 @@ class Depth(object):
 				print(len(parent_board.solution_path))
 				return
 
-			# for every car try to move it backwards or forwards
+			# for every car try to move it backwards and forwards
 			for car in parent_board.cars:
                 
-				# try forward
 				self.try_move(parent_board, car)
 
+
+		# when the stack is empty the solotion is not found
 		print("not solvable :(")
 
 

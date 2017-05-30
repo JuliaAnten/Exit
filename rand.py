@@ -1,3 +1,15 @@
+###############################################
+# 
+# Code written by: 
+# - Julia Anten
+# - Sander Swierts 
+# - Maxim Stomphorst
+#
+# Random board solver implementation. 
+# 
+#
+###############################################
+
 from board import Board
 import random
 import mover
@@ -12,9 +24,9 @@ class Random(object):
 		self.winstate = []
 		# series of moves that solves the board
 		self.solution = []
-
 		# amount of moves needed to reach a state where red can move directly to exit
 		self.valid_count = 0
+
 
 	def solve(self):
 		""" Start solving the board """

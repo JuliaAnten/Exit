@@ -66,13 +66,11 @@ def main():
 		board = setup_board(path)
 		breadth_class = Breadth(board)
 		
-		cProfile.run("breadth_class.solve()")
-
 		# start solving
-		# if detailed_benchmarking == True:
+		if detailed_benchmarking == True:
 			
-		# else:
-		# 	breadth_class.solve()
+		else:
+			breadth_class.solve()
 
 	# solve using depth first
 	elif sys.argv[2] == "depth":
