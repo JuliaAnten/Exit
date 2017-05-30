@@ -1,9 +1,6 @@
 ###############################################
 # 
-# Code written by: 
-# - Julia Anten
-# - Sander Swierts 
-# - Maxim Stomphorst
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
 # 
 # This call creats a rush hour board class with its components.
 #
@@ -27,8 +24,8 @@ class Board(object):
 	def __repr__(self):
 		string = ""
 		for row in self.current_state:
-			string+=str(row)
-			string+="\n"
+			string += str(row)
+			string += "\n"
 		return string
 
 
@@ -64,7 +61,7 @@ class Board(object):
 
 					# check if a car doesn't go out of bounds
 					if (car.x + i) >= self.dimension:
-						print("car {}: x out of range: {}".format(car.name, (car.x +i)))
+						print("car {}: x out of range: {}".format(car.name, (car.x + i)))
 					elif car.y >= self.dimension:
 						print("car {}: y out of range: {}".format(car.name, (car.y)))
 					# place car on the board
@@ -76,13 +73,13 @@ class Board(object):
 				for i in range(car.length):
 
 					if (car.y + i) >= self.dimension:
-						print("car {}: y out of range: {}".format(car.name, (car.y+i)))
+						print("car {}: y out of range: {}".format(car.name, (car.y + i)))
 					elif car.x >= self.dimension:
 						print("car {}: x out of range: {}".format(car.name, (car.x)))
 					else:
 						self.current_state[car.y + i][car.x] = car.name[0]
 
-	""" """
+	"""Creates a empty board and places the cars on the created board."""
 	def update_current_state(self):
 
 		# creating a new empty board

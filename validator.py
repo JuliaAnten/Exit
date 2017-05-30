@@ -1,6 +1,15 @@
+###############################################
+# 
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
+#
+# This Check if a board is in s solved position. 
+# 
+###############################################
+
 from board import Board
 
-# returns true when tiles in front of car is empty
+"""Check if a board is in the win position
+if so it returns true else false """
 def check_endstate(board):
 	i = board.cars[0].length
 	

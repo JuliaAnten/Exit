@@ -1,9 +1,6 @@
 ###############################################
 # 
-# Code written by: 
-# - Julia Anten
-# - Sander Swierts 
-# - Maxim Stomphorst
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
 #
 # Random board solver implementation. 
 # 

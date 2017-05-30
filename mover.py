@@ -1,9 +1,6 @@
 ###############################################
 # 
-# Code written by: 
-# - Julia Anten
-# - Sander Swierts 
-# - Maxim Stomphorst
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
 #
 # This class determines if a move is valid or not.
 # If a move is valid it Returns a child board otherwise

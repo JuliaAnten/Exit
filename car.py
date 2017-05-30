@@ -1,9 +1,6 @@
 ###############################################
 # 
-# Code written by: 
-# - Julia Anten
-# - Sander Swierts 
-# - Maxim Stomphorst
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
 # 
 # This creates a Car Class where the information about the car's is stored.
 #

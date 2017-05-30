@@ -1,9 +1,6 @@
 ###############################################
 # 
-# Code written by: 
-# - Julia Anten
-# - Sander Swierts 
-# - Maxim Stomphorst
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
 #
 # This is our emplementation of a breadth first search BFS.
 # 

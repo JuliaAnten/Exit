@@ -2,19 +2,17 @@
 
 ###############################################
 # 
-# Code written by: 
-# - Julia Anten
-# - Sander Swierts 
-# - Maxim Stomphorst
-#
-# This is the controller for the test.py game.
-#
+# Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
+# 
+# This is the controller for how a board is solved.
+# 
+# You can call one of three algorithms:
+# - Breadth first search
+# - Depth first search
+# - Random
+# 
 # Usage: ./test.py path/to/board random/breadth
 # 
-# Its functions:
-# 01 - It checks for the proper use of the program.
-# 02 - It creates a board class with al its necessary components.
-# 03 - It calls solve methode of choice.
 #
 ###############################################
 
