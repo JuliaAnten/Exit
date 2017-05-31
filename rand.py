@@ -36,7 +36,7 @@ class Random(object):
 			direction = random.randint(0,1)
 
 			# try moving the random car
-			new_board = mover.move(self.current, random_car,direction)
+			new_board = mover.move(self.current, random_car,direction, False)
 			if new_board:
 				self.current = new_board
 				self.current.update_current_state()

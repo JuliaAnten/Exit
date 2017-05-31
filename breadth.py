@@ -78,7 +78,7 @@ class Breadth(object):
 		
 		for i in range(2):
 			# find a posibility
-			child_board = mover.move(board, car, direction)
+			child_board = mover.move(board, car, direction, True)
 
 			# if possibility is valid
 			if child_board:
