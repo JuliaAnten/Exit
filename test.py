@@ -62,13 +62,10 @@ def main():
 	# solve using breadth first
 	elif sys.argv[2] == "breadth":
 		board = setup_board(path)
+
 		breadth_class = Breadth(board)
 		
-		# start solving
-		if detailed_benchmarking == True:
-			
-		else:
-			breadth_class.solve()
+		breadth_class.solve()
 
 	# solve using depth first
 	elif sys.argv[2] == "depth":
@@ -77,10 +74,7 @@ def main():
 		depth_class = Depth(board)
 		
 		# start solving
-		if detailed_benchmarking == True:
-			cProfile.run('depth_class.solve()')
-		else:
-			depth_class.solve()
+		depth_class.solve()
 
 	# invalid commandline arguments
 	else:
