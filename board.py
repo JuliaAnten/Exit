@@ -2,61 +2,54 @@
 # 
 # Code written by: Julia Anten, Sander Swierts, Maxim Stomphorst
 # 
-# This call creats a rush hour board class with its components.
+# Defines Board class
 #
 ###############################################
 
 from car import Car
 
+
 class Board(object):
+	"""Defines the Board class"""
 
-
-	"""docstring for Board"""
 	def __init__(self):
-        # dimensions of the board
-		self.dimension = ()
-        # list of car objects
+		"""Initializes the dimension, car list,
+		current state in a 2D array and a path to the solution.
+		"""
+		self.dimension = 0
 		self.cars = []
-        # the board status
 		self.current_state = []
-        # path to solution when a new child is created it appends the move
 		self.solution_path = []
 
 	def __repr__(self):
+		"""Overrides standard repr method"""
 		string = ""
 		for row in self.current_state:
 			string += str(row)
 			string += "\n"
 		return string
-
-
-	"""If hash is called's on board it hashs the board
-	by all the cars that are on the board.
-	name, x position, and y position this done in the car class.
-	a hash has to return a interger that way the code converts a string."""	
+	
 	def __hash__(self):
+		"""Hashes the board using the hashes of cars in list. """
 		a_hash = []
 		[a_hash .append(str(hash(car))) for car in self.cars]
 		return int("".join(a_hash))
 
-	"""If a equality test is called on the class 
-	this determines how it is handelt."""
 	def __eq__(self, other):
+		"""Overrides standard equals method"""
 		return hash(self) == hash(other)
-
-	"""Creates a empty doubly linked list,
-	a representation of the rush hour board."""
+	
 	def create_empty(self):
+		"""Creates an empty 2D array to represent the current state of the board."""
 		empty_board = [["-" for y in range(self.dimension)] for x in range(self.dimension)]
 		self.current_state = empty_board
-
-	"""Places the cars from the car class on the empty board"""
+	
 	def setup(self):
+		"""Places the cars from the car list on the empty board"""
 
-		# selects every car one by one
 		for car in self.cars:
 
-			# check what orientation the car is in (h = horizontal)
+			# check what orientation the car is in (h = horizontal, v = vertical)
 			if car.orientation == "h":
 				for i in range(car.length):
 
@@ -69,8 +62,7 @@ class Board(object):
 					else:
 						self.current_state[car.y][car.x + i] = car.name[0]
 
-			# v = verital
-			if car.orientation == "v":
+			elif car.orientation == "v":
 				for i in range(car.length):
 
 					if (car.y + i) >= self.dimension:
@@ -80,8 +72,8 @@ class Board(object):
 					else:
 						self.current_state[car.y + i][car.x] = car.name[0]
 
-	"""Creates a empty board and places the cars on the created board."""
 	def update_current_state(self):
+		"""Updates current representation of board"""
 
 		# creating a new empty board
 		self.create_empty()
@@ -92,22 +84,21 @@ class Board(object):
 			# if the car orientation is h = horizontal
 			if car.orientation == "h":
 				for i in range(car.length):
-					# placeing the car on the board (if updatede)
 					self.current_state[car.y][car.x + i] = car.name[0]
 
-			# if the are is v = verital
+			# if car is v = vertical
 			else:
 				for i in range(car.length):
 					self.current_state[car.y + i][car.x] = car.name[0]
 
 		return True
 
-	"""Imports the car locations from a file stroing the information in as as list 
-	in self.cars."""
 	def get_info(self, file_path):
+		"""Imports the information of the cars and populates car list"""
+
 		# opening the input file and reading it
 		file = open(file_path, "r")
-		if file == None:
+		if file is None:
 			print("Opening dictionary file failed")
 
 		# parse input file line by line
@@ -118,8 +109,9 @@ class Board(object):
 
 				# if line contains dimension info
 				if line.startswith("dim:"):
-
 					words = line.split()
+					
+					# set dimension
 					self.dimension = int(words[1])
 
 				# if line contains car info
@@ -129,12 +121,13 @@ class Board(object):
 
 					# populate car object
 					car = Car(words[0],
-							  int(words[1]),
-							  int(words[2]),
-							  int(words[3]),
-							  words[4])
+							int(words[1]),
+							int(words[2]),
+							int(words[3]),
+							words[4])
 
-					# append the car to the car dictionary
+					# append the car to the car list
 					self.cars.append(car)
 
 		file.close()
+		
