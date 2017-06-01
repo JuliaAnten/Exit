@@ -9,7 +9,7 @@
 # You can call one of three algorithms:
 # - Breadth first search
 # - Depth first search
-# - Random
+# - Random search
 #
 # Boards can be found in /boards.
 # 
@@ -43,7 +43,7 @@ def main():
 	# defines the path to the board that needs solving
 	path = str(sys.argv[1])
 	
-	# counts how many solutions have been found
+	# counts how many solutions have been found already
 	count = 0
 
 	# get start time for basic benchmarking

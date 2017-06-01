@@ -10,8 +10,7 @@ from board import Board
 
 
 def check_endstate(board):
-	"""Checks if a board has winning configuration.
-	"""
+	"""Checks if a board has winning configuration."""
 
 	# instantiate iterator to iterate over tiles between red car and exit
 	i = board.cars[0].length

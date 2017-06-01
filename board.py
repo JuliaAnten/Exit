@@ -91,8 +91,6 @@ class Board(object):
 				for i in range(car.length):
 					self.current_state[car.y + i][car.x] = car.name[0]
 
-		return True
-
 	def get_info(self, file_path):
 		"""Imports the information of the cars and populates car list"""
 
@@ -130,4 +128,3 @@ class Board(object):
 					self.cars.append(car)
 
 		file.close()
-		
