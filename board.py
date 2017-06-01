@@ -10,6 +10,7 @@ from car import Car
 
 class Board(object):
 
+
 	"""docstring for Board"""
 	def __init__(self):
         # dimensions of the board

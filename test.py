@@ -11,30 +11,35 @@
 # - Depth first search
 # - Random
 # 
-# Usage: ./test.py path/to/board random/breadth
+# Usage: ./test.py path/to/board random/breadth/depth [amount of tries]
 # 
 #
 ###############################################
 
 import sys
-import cProfile
 import time
 from board import Board
 from breadth import Breadth
 from depth import Depth
 from rand import Random
 
+
 def main():
 
 	# check command lines arguments count
-	if len(sys.argv) != 4:
-		print("Not enough arguments:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
+	if len(sys.argv) != 3:
+		print("Not enough arguments:\n\tUsage: ./test.py path/to/board random/breadth/depth [amount of tries]")
 		sys.exit(1)
 
-	# defines how many times random should try to find a solution
-	tries = int(sys.argv[3])
+	# defines how many times a solution is searched for
+	if len(sys.argv) == 4:
+		tries = int(sys.argv[3])
+	else:
+		tries = 1
+	
 	# defines the path to the board that needs solving
 	path = str(sys.argv[1])
+	
 	# counts how many solutions have been found by random
 	count = 0
 
@@ -47,38 +52,38 @@ def main():
 	# check given algorithm
 	if sys.argv[2] == "random":
 		while count < tries:
+
+			# get current system time
 			time0 = time.time()
 
+			# creates a loaded board class
 			board = setup_board(path)
+
+			# creates a random class
 			random = Random(board)
+
+			# starts the random algorithm to solve the puzzle
 			random.solve()
 
-			time1 = time.time()
-			print("singel time:")
-			print(time1 - time0)
-
-			count +=1
+			count += 1
 
 	# solve using breadth first
 	elif sys.argv[2] == "breadth":
-		board = setup_board(path)
-
-		breadth_class = Breadth(board)
 		
-		breadth_class.solve()
+		board = setup_board(path)
+		breadth = Breadth(board)
+		breadth.solve()
 
 	# solve using depth first
 	elif sys.argv[2] == "depth":
+
 		board = setup_board(path)
-		
-		depth_class = Depth(board)
-		
-		# start solving
-		depth_class.solve()
+		depth = Depth(board)
+		depth.solve()
 
 	# invalid commandline arguments
 	else:
-		print("No valid algorithm:\n\tUsage: ./test.py  path/to/board  random/breadth/depth  number of tries")
+		print("Usage: ./test.py path/to/board random/breadth/depth [amount of tries]")
 		sys.exit(2)
 
 	# print benchmark time
